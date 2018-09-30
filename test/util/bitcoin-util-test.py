@@ -9,14 +9,9 @@ Runs automatically during `make check`.
 
 Can also be run manually."""
 
-from __future__ import division,print_function,unicode_literals
-
 import argparse
 import binascii
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
+import configparser
 import difflib
 import json
 import logging
@@ -27,9 +22,7 @@ import sys
 
 def main():
     config = configparser.ConfigParser()
-    config.optionxform = str
-    config.readfp(open(os.path.join(os.path.dirname(__file__), "../config.ini"), encoding="utf8"))
-    env_conf = dict(config.items('environment'))
+    config.read_file(open(os.path.dirname(__file__) + "/../config.ini"))
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('-v', '--verbose', action='store_true')
@@ -44,12 +37,12 @@ def main():
     # Add the format/level to the logger
     logging.basicConfig(format=formatter, level=level)
 
-    bctester(os.path.join(env_conf["SRCDIR"], "test", "util", "data"), "bitcoin-util-test.json", env_conf)
+    bctester(config["environment"]["SRCDIR"] + "/test/util/data", "bitcoin-util-test.json", config["environment"])
 
 def bctester(testDir, input_basename, buildenv):
     """ Loads and parses the input file, runs all tests and reports results"""
-    input_filename = os.path.join(testDir, input_basename)
-    raw_data = open(input_filename, encoding="utf8").read()
+    input_filename = testDir + "/" + input_basename
+    raw_data = open(input_filename).read()
     input_data = json.loads(raw_data)
 
     failed_testcases = []
@@ -77,7 +70,7 @@ def bctest(testDir, testObj, buildenv):
     are not as expected. Error is caught by bctester() and reported.
     """
     # Get the exec names and arguments
-    execprog = os.path.join(buildenv["BUILDDIR"], "src", testObj["exec"] + buildenv["EXEEXT"])
+    execprog = buildenv["BUILDDIR"] + "/src/" + testObj['exec'] + buildenv["EXEEXT"]
     execargs = testObj['args']
     execrun = [execprog] + execargs
 
@@ -85,27 +78,23 @@ def bctest(testDir, testObj, buildenv):
     stdinCfg = None
     inputData = None
     if "input" in testObj:
-        filename = os.path.join(testDir, testObj["input"])
-        inputData = open(filename, encoding="utf8").read()
+        filename = testDir + "/" + testObj['input']
+        inputData = open(filename).read()
         stdinCfg = subprocess.PIPE
 
     # Read the expected output data (if there is any)
     outputFn = None
     outputData = None
-    outputType = None
     if "output_cmp" in testObj:
         outputFn = testObj['output_cmp']
         outputType = os.path.splitext(outputFn)[1][1:]  # output type from file extension (determines how to compare)
         try:
-            outputData = open(os.path.join(testDir, outputFn), encoding="utf8").read()
+            outputData = open(testDir + "/" + outputFn).read()
         except:
             logging.error("Output file " + outputFn + " can not be opened")
             raise
         if not outputData:
             logging.error("Output data missing for " + outputFn)
-            raise Exception
-        if not outputType:
-            logging.error("Output file %s does not have a file extension" % outputFn)
             raise Exception
 
     # Run the test

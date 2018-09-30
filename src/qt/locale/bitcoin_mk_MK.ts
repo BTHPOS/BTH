@@ -299,10 +299,6 @@
 <context>
     <name>Intro</name>
     <message>
-        <source>Bitcoin</source>
-        <translation>Биткоин</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Грешка</translation>
     </message>
@@ -355,10 +351,6 @@
         <source>none</source>
         <translation>нема</translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation>Грешка</translation>
-    </message>
     </context>
 <context>
     <name>OverviewPage</name>
@@ -372,10 +364,6 @@
     </context>
 <context>
     <name>PeerTableModel</name>
-    <message>
-        <source>Sent</source>
-        <translation>Испратени</translation>
-    </message>
     </context>
 <context>
     <name>QObject</name>
@@ -406,22 +394,6 @@
     <message>
         <source>%1 and %2</source>
         <translation>%1 и %2</translation>
-    </message>
-    <message>
-        <source>%1 B</source>
-        <translation>%1 Б</translation>
-    </message>
-    <message>
-        <source>%1 KB</source>
-        <translation>%1 КБ</translation>
-    </message>
-    <message>
-        <source>%1 MB</source>
-        <translation>%1 МБ</translation>
-    </message>
-    <message>
-        <source>%1 GB</source>
-        <translation>%1 ГБ</translation>
     </message>
     </context>
 <context>
@@ -460,6 +432,22 @@
         <source>&amp;Console</source>
         <translation>&amp;Конзола</translation>
     </message>
+    <message>
+        <source>%1 B</source>
+        <translation>%1 Б</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translation>%1 КБ</translation>
+    </message>
+    <message>
+        <source>%1 MB</source>
+        <translation>%1 МБ</translation>
+    </message>
+    <message>
+        <source>%1 GB</source>
+        <translation>%1 ГБ</translation>
+    </message>
     </context>
 <context>
     <name>ReceiveCoinsDialog</name>
@@ -497,10 +485,6 @@
     <message>
         <source>&amp;Save Image...</source>
         <translation>&amp;Сними Слика...</translation>
-    </message>
-    <message>
-        <source>Wallet</source>
-        <translation>Паричник</translation>
     </message>
     </context>
 <context>
@@ -589,6 +573,10 @@
     </context>
 <context>
     <name>bitcoin-core</name>
+    <message>
+        <source>Options:</source>
+        <translation>Опции:</translation>
+    </message>
     <message>
         <source>Bitcoin Core</source>
         <translation>Биткоин Core</translation>

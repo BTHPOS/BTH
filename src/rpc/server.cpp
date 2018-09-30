@@ -1,18 +1,20 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2018 The Bitcoin Core developers
+// Copyright (c) 2009-2016 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <rpc/server.h>
+#include "rpc/server.h"
 
-#include <fs.h>
-#include <key_io.h>
-#include <random.h>
-#include <shutdown.h>
-#include <sync.h>
-#include <ui_interface.h>
-#include <util.h>
-#include <utilstrencodings.h>
+#include "base58.h"
+#include "fs.h"
+#include "init.h"
+#include "random.h"
+#include "sync.h"
+#include "ui_interface.h"
+#include "util.h"
+#include "utilstrencodings.h"
+
+#include <univalue.h>
 
 #include <boost/bind.hpp>
 #include <boost/signals2/signal.hpp>
@@ -23,10 +25,10 @@
 #include <memory> // for unique_ptr
 #include <unordered_map>
 
-static CCriticalSection cs_rpcWarmup;
 static bool fRPCRunning = false;
-static bool fRPCInWarmup GUARDED_BY(cs_rpcWarmup) = true;
-static std::string rpcWarmupStatus GUARDED_BY(cs_rpcWarmup) = "RPC server started";
+static bool fRPCInWarmup = true;
+static std::string rpcWarmupStatus("RPC server started");
+static CCriticalSection cs_rpcWarmup;
 /* Timer-creating functions */
 static RPCTimerInterface* timerInterface = nullptr;
 /* Map of name to timer. */
@@ -49,12 +51,18 @@ void RPCServer::OnStopped(std::function<void ()> slot)
     g_rpcSignals.Stopped.connect(slot);
 }
 
+void RPCServer::OnPreCommand(std::function<void (const CRPCCommand&)> slot)
+{
+    g_rpcSignals.PreCommand.connect(boost::bind(slot, _1));
+}
+
 void RPCTypeCheck(const UniValue& params,
-                  const std::list<UniValueType>& typesExpected,
+                  const std::list<UniValue::VType>& typesExpected,
                   bool fAllowNull)
 {
     unsigned int i = 0;
-    for (const UniValueType& t : typesExpected) {
+    for (UniValue::VType t : typesExpected)
+    {
         if (params.size() <= i)
             break;
 
@@ -66,10 +74,10 @@ void RPCTypeCheck(const UniValue& params,
     }
 }
 
-void RPCTypeCheckArgument(const UniValue& value, const UniValueType& typeExpected)
+void RPCTypeCheckArgument(const UniValue& value, UniValue::VType typeExpected)
 {
-    if (!typeExpected.typeAny && value.type() != typeExpected.type) {
-        throw JSONRPCError(RPC_TYPE_ERROR, strprintf("Expected type %s, got %s", uvTypeName(typeExpected.type), uvTypeName(value.type())));
+    if (value.type() != typeExpected) {
+        throw JSONRPCError(RPC_TYPE_ERROR, strprintf("Expected type %s, got %s", uvTypeName(typeExpected), uvTypeName(value.type())));
     }
 }
 
@@ -157,8 +165,8 @@ std::string CRPCTable::help(const std::string& strCommand, const JSONRPCRequest&
     std::set<rpcfn_type> setDone;
     std::vector<std::pair<std::string, const CRPCCommand*> > vCommands;
 
-    for (const auto& entry : mapCommands)
-        vCommands.push_back(make_pair(entry.second->category + entry.first, entry.second));
+    for (std::map<std::string, const CRPCCommand*>::const_iterator mi = mapCommands.begin(); mi != mapCommands.end(); ++mi)
+        vCommands.push_back(make_pair(mi->second->category + mi->first, mi->second));
     sort(vCommands.begin(), vCommands.end());
 
     JSONRPCRequest jreq(helpreq);
@@ -232,14 +240,14 @@ UniValue stop(const JSONRPCRequest& jsonRequest)
     if (jsonRequest.fHelp || jsonRequest.params.size() > 1)
         throw std::runtime_error(
             "stop\n"
-            "\nStop Bitcoin server.");
+            "\nStop bithereum server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "Bitcoin server stopping";
+    return "bithereum server stopping";
 }
 
-static UniValue uptime(const JSONRPCRequest& jsonRequest)
+UniValue uptime(const JSONRPCRequest& jsonRequest)
 {
     if (jsonRequest.fHelp || jsonRequest.params.size() > 1)
         throw std::runtime_error(
@@ -259,12 +267,12 @@ static UniValue uptime(const JSONRPCRequest& jsonRequest)
  * Call Table
  */
 static const CRPCCommand vRPCCommands[] =
-{ //  category              name                      actor (function)         argNames
-  //  --------------------- ------------------------  -----------------------  ----------
+{ //  category              name                      actor (function)         okSafe argNames
+  //  --------------------- ------------------------  -----------------------  ------ ----------
     /* Overall control/query calls */
-    { "control",            "help",                   &help,                   {"command"}  },
-    { "control",            "stop",                   &stop,                   {}  },
-    { "control",            "uptime",                 &uptime,                 {}  },
+    { "control",            "help",                   &help,                   true,  {"command"}  },
+    { "control",            "stop",                   &stop,                   true,  {}  },
+    { "control",            "uptime",                 &uptime,                 true,  {}  },
 };
 
 CRPCTable::CRPCTable()
@@ -301,11 +309,12 @@ bool CRPCTable::appendCommand(const std::string& name, const CRPCCommand* pcmd)
     return true;
 }
 
-void StartRPC()
+bool StartRPC()
 {
     LogPrint(BCLog::RPC, "Starting RPC\n");
     fRPCRunning = true;
     g_rpcSignals.Started();
+    return true;
 }
 
 void InterruptRPC()
@@ -366,11 +375,7 @@ void JSONRPCRequest::parse(const UniValue& valRequest)
     if (!valMethod.isStr())
         throw JSONRPCError(RPC_INVALID_REQUEST, "Method must be a string");
     strMethod = valMethod.get_str();
-    if (fLogIPs)
-        LogPrint(BCLog::RPC, "ThreadRPCServer method=%s user=%s peeraddr=%s\n", SanitizeString(strMethod),
-            this->authUser, this->peerAddr);
-    else
-        LogPrint(BCLog::RPC, "ThreadRPCServer method=%s user=%s\n", SanitizeString(strMethod), this->authUser);
+    LogPrint(BCLog::RPC, "ThreadRPCServer method=%s\n", SanitizeString(strMethod));
 
     // Parse params
     UniValue valParams = find_value(request, "params");
@@ -382,17 +387,11 @@ void JSONRPCRequest::parse(const UniValue& valRequest)
         throw JSONRPCError(RPC_INVALID_REQUEST, "Params must be an array or object");
 }
 
-bool IsDeprecatedRPCEnabled(const std::string& method)
-{
-    const std::vector<std::string> enabled_methods = gArgs.GetArgs("-deprecatedrpc");
-
-    return find(enabled_methods.begin(), enabled_methods.end(), method) != enabled_methods.end();
-}
-
-static UniValue JSONRPCExecOne(JSONRPCRequest jreq, const UniValue& req)
+static UniValue JSONRPCExecOne(const UniValue& req)
 {
     UniValue rpc_result(UniValue::VOBJ);
 
+    JSONRPCRequest jreq;
     try {
         jreq.parse(req);
 
@@ -412,11 +411,11 @@ static UniValue JSONRPCExecOne(JSONRPCRequest jreq, const UniValue& req)
     return rpc_result;
 }
 
-std::string JSONRPCExecBatch(const JSONRPCRequest& jreq, const UniValue& vReq)
+std::string JSONRPCExecBatch(const UniValue& vReq)
 {
     UniValue ret(UniValue::VARR);
     for (unsigned int reqIdx = 0; reqIdx < vReq.size(); reqIdx++)
-        ret.push_back(JSONRPCExecOne(jreq, vReq[reqIdx]));
+        ret.push_back(JSONRPCExecOne(vReq[reqIdx]));
 
     return ret.write() + "\n";
 }

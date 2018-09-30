@@ -1,16 +1,15 @@
-// Copyright (c) 2011-2018 The Bitcoin Core developers
+// Copyright (c) 2011-2016 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_GUIUTIL_H
 #define BITCOIN_QT_GUIUTIL_H
 
-#include <amount.h>
-#include <fs.h>
+#include "amount.h"
+#include "fs.h"
 
 #include <QEvent>
 #include <QHeaderView>
-#include <QItemDelegate>
 #include <QMessageBox>
 #include <QObject>
 #include <QProgressBar>
@@ -20,11 +19,6 @@
 
 class QValidatedLineEdit;
 class SendCoinsRecipient;
-
-namespace interfaces
-{
-    class Node;
-}
 
 QT_BEGIN_NAMESPACE
 class QAbstractItemView;
@@ -46,8 +40,9 @@ namespace GUIUtil
     // Return a monospace font
     QFont fixedPitchFont();
 
-    // Set up widget for address
+    // Set up widgets for address and amounts
     void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
+    void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
     // Parse "bitcoin:" URI into recipient object, return true on successful parsing
     bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
@@ -55,7 +50,7 @@ namespace GUIUtil
     QString formatBitcoinURI(const SendCoinsRecipient &info);
 
     // Returns true if given address+amount meets "dust" definition
-    bool isDust(interfaces::Node& node, const QString& address, const CAmount& amount);
+    bool isDust(const QString& address, const CAmount& amount);
 
     // HTML escaping for rich text controls
     QString HtmlEscape(const QString& str, bool fMultiLine=false);
@@ -121,6 +116,9 @@ namespace GUIUtil
     // Open the config file
     bool openBitcoinConf();
 
+    // Replace invalid default fonts with known good ones
+    void SubstituteFonts(const QString& language);
+
     /** Qt event filter that intercepts ToolTipChange events, and replaces the tooltip with a rich text
       representation if needed. This assures that Qt can word-wrap long tooltip messages.
       Tooltips longer than the provided size threshold (in characters) are wrapped.
@@ -143,7 +141,7 @@ namespace GUIUtil
      * Makes a QTableView last column feel as if it was being resized from its left border.
      * Also makes sure the column widths are never larger than the table's viewport.
      * In Qt, all columns are resizable from the right, but it's not intuitive resizing the last column from the right.
-     * Usually our second to last columns behave as if stretched, and when on stretch mode, columns aren't resizable
+     * Usually our second to last columns behave as if stretched, and when on strech mode, columns aren't resizable
      * interactively or programmatically.
      *
      * This helper object takes care of this issue.
@@ -181,6 +179,11 @@ namespace GUIUtil
     bool GetStartOnSystemStartup();
     bool SetStartOnSystemStartup(bool fAutoStart);
 
+    /** Save window size and position */
+    void saveWindowGeometry(const QString& strSetting, QWidget *parent);
+    /** Restore window size and position */
+    void restoreWindowGeometry(const QString& strSetting, const QSize &defaultSizeIn, QWidget *parent);
+
     /* Convert QString to OS specific boost path through UTF-8 */
     fs::path qstringToBoostPath(const QString &path);
 
@@ -201,10 +204,6 @@ namespace GUIUtil
 
     QString formatNiceTimeOffset(qint64 secs);
 
-    QString formatBytes(uint64_t bytes);
-
-    qreal calculateIdealFontSize(int width, const QString& text, QFont font, qreal minPointSize = 4, qreal startPointSize = 14);
-
     class ClickableLabel : public QLabel
     {
         Q_OBJECT
@@ -217,11 +216,11 @@ namespace GUIUtil
     protected:
         void mouseReleaseEvent(QMouseEvent *event);
     };
-
+    
     class ClickableProgressBar : public QProgressBar
     {
         Q_OBJECT
-
+        
     Q_SIGNALS:
         /** Emitted when the progressbar is clicked. The relative mouse coordinates of the click are
          * passed to the signal.
@@ -231,20 +230,20 @@ namespace GUIUtil
         void mouseReleaseEvent(QMouseEvent *event);
     };
 
-    typedef ClickableProgressBar ProgressBar;
-
-    class ItemDelegate : public QItemDelegate
+#if defined(Q_OS_MAC) && QT_VERSION >= 0x050000
+    // workaround for Qt OSX Bug:
+    // https://bugreports.qt-project.org/browse/QTBUG-15631
+    // QProgressBar uses around 10% CPU even when app is in background
+    class ProgressBar : public ClickableProgressBar
     {
-        Q_OBJECT
-    public:
-        ItemDelegate(QObject* parent) : QItemDelegate(parent) {}
-
-    Q_SIGNALS:
-        void keyEscapePressed();
-
-    private:
-        bool eventFilter(QObject *object, QEvent *event);
+        bool event(QEvent *e) {
+            return (e->type() != QEvent::StyleAnimationUpdate) ? QProgressBar::event(e) : false;
+        }
     };
+#else
+    typedef ClickableProgressBar ProgressBar;
+#endif
+
 } // namespace GUIUtil
 
 #endif // BITCOIN_QT_GUIUTIL_H

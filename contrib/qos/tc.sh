@@ -2,7 +2,6 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-export LC_ALL=C
 #network interface on which to limit traffic
 IF="eth0"
 #limit of the network interface in question
@@ -13,6 +12,9 @@ LIMIT="160kbit"
 LOCALNET_V4="192.168.0.0/16"
 #defines the IPv6 address space for which you wish to disable rate limiting
 LOCALNET_V6="fe80::/10"
+
+# RPC PORT
+RPC_PORT="8338"
 
 #delete existing rules
 tc qdisc del dev ${IF} root
@@ -45,16 +47,16 @@ fi
 #	ret=$?
 #done
 
-#limit outgoing traffic to and from port 8333. but not when dealing with a host on the local network
+#limit outgoing traffic to and from port RPC_PORT. but not when dealing with a host on the local network
 #	(defined by $LOCALNET_V4 and $LOCALNET_V6)
 #	--set-mark marks packages matching these criteria with the number "2" (v4)
 #	--set-mark marks packages matching these criteria with the number "4" (v6)
 #	these packets are filtered by the tc filter with "handle 2"
 #	this filter sends the packages into the 1:11 class, and this class is limited to ${LIMIT}
-iptables -t mangle -A OUTPUT -p tcp -m tcp --dport 8333 ! -d ${LOCALNET_V4} -j MARK --set-mark 0x2
-iptables -t mangle -A OUTPUT -p tcp -m tcp --sport 8333 ! -d ${LOCALNET_V4} -j MARK --set-mark 0x2
+iptables -t mangle -A OUTPUT -p tcp -m tcp --dport ${RPC_PORT} ! -d ${LOCALNET_V4} -j MARK --set-mark 0x2
+iptables -t mangle -A OUTPUT -p tcp -m tcp --sport ${RPC_PORT} ! -d ${LOCALNET_V4} -j MARK --set-mark 0x2
 
 if [ ! -z "${LOCALNET_V6}" ] ; then
-	ip6tables -t mangle -A OUTPUT -p tcp -m tcp --dport 8333 ! -d ${LOCALNET_V6} -j MARK --set-mark 0x4
-	ip6tables -t mangle -A OUTPUT -p tcp -m tcp --sport 8333 ! -d ${LOCALNET_V6} -j MARK --set-mark 0x4
+	ip6tables -t mangle -A OUTPUT -p tcp -m tcp --dport ${RPC_PORT} ! -d ${LOCALNET_V6} -j MARK --set-mark 0x4
+	ip6tables -t mangle -A OUTPUT -p tcp -m tcp --sport ${RPC_PORT} ! -d ${LOCALNET_V6} -j MARK --set-mark 0x4
 fi

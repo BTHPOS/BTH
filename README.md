@@ -1,76 +1,36 @@
-Bitcoin Core integration/staging tree
-=====================================
+# Bithereum
 
-[![Build Status](https://travis-ci.org/bitcoin/bitcoin.svg?branch=master)](https://travis-ci.org/bitcoin/bitcoin)
+[![BuildStatus](https://travis-ci.org/BTHPOS/BTHPOS.svg?branch=master)](https://travis-ci.org/BTHPOS/BTHPOS)
 
-https://bitcoincore.org
+Bithereum (codename BTH) will begin as a fork of Bitcoin and will then be mined as a separate chain shortly after.
 
-What is Bitcoin?
-----------------
+The primary goal is to maintain a variant of Bitcoin that is centered around Proof of Stake and Ethereum's technological roadmap ultimately democratizing mining efforts, improving scalability, and increasing network consensus.
 
-Bitcoin is an experimental digital currency that enables instant payments to
-anyone, anywhere in the world. Bitcoin uses peer-to-peer technology to operate
-with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Bitcoin Core is the name of open source
-software which enables the use of this currency.
+BTC which has long been touted as the most superior P2P currency, has seen it’s networks slow down significantly in lieu of the major price upswing seen this year. These points of inefficiency have not been addressed by the core development team and have resulted in a further divide in the community. The three major issues prevalent with BTC are as follows:
 
-For more information, as well as an immediately useable, binary version of
-the Bitcoin Core software, see https://bitcoincore.org/en/download/, or read the
-[original whitepaper](https://bitcoincore.org/bitcoin.pdf).
+- Limited scalability- increased traffic and volume has hindered speed, ease, and cheapness in transacting across borders
+- Community Schism- Deep ideological divide within BTC community
+- Mining Cartel- Monopolization through mining pools; the 4 largest mining pools control roughly 61% of the mining hashpower
 
-License
--------
+Bithereum believes in the importance of both on-chain and off-chain scaling solutions, as well as Proof of Stake being a consensus mechanism that will make the blockchain more efficient while increasing network security.
 
-Bitcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
-information or see https://opensource.org/licenses/MIT.
+Bithereum preserves and implements Bitcoin features such as SegWit but also focuses on implementing features of Ethereum, namely PoS. Significant features of Bithereum include:
 
-Development Process
--------------------
+    - Initially ASIC-resistant, GPU-minable PoW algorithm (Equihash <144,5>)
+    - To be later changed to Casper-like Proof of Stake FFG Consensus model via OpCodes. Additional details about our PoS model are in this blog: https://medium.com/bithereum-network/bithereums-proof-of-stake-concept-b06899fa4950
+    - Increased Blocksize (4MB)
+    - SegWit
+    - Replay protection (SIGHASH_FORK_ID)
+    - Lightning Network
 
-The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/bitcoin/bitcoin/tags) are created
-regularly to indicate new official, stable release versions of Bitcoin Core.
+Though Proof of Stake will take some time to implement, even in the case of Ethereum, it is on the horizon of completion. Bithereum, however, will begin mining prior to its completion through the Proof of Work algorithm known as Equihash. Once PoS is complete, miners will be able to stake their holdings for dividend-like returns. Bithereum will be leveraging existing OpCodes as well as introducing several new OpCodes to create its PoS model. 
 
-The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
+Although BTH was bootstrapped to create an entirely new network, it contains the entire Bitcoin blockchain until the block from which it will be forked. As a result, Bithereum will become a full fork with all of Bitcoin's transaction history since 2009. Any Bitcoin wallet address which held Bitcoin in the BTC block before the fork held an equal number of Bithereum in the first block after the fork.
 
-Testing
--------
+## WARNING
 
-Testing and code review is the bottleneck for development; we get more pull
-requests than we can review and test on short notice. Please be patient and help out by testing
-other people's pull requests, and remember this is a security-critical project where any mistake might cost people
-lots of money.
+This is the staging tree of Bithereum. If you don’t understand what you are doing, please don’t compile and run your own client from the staging tree.
 
-### Automated Testing
+## Links
 
-Developers are strongly encouraged to write [unit tests](src/test/README.md) for new code, and to
-submit new unit tests for old code. Unit tests can be compiled and run
-(assuming they weren't disabled in configure) with: `make check`. Further details on running
-and extending unit tests can be found in [/src/test/README.md](/src/test/README.md).
-
-There are also [regression and integration tests](/test), written
-in Python, that are run automatically on the build server.
-These tests can be run (if the [test dependencies](/test) are installed) with: `test/functional/test_runner.py`
-
-The Travis CI system makes sure that every pull request is built for Windows, Linux, and macOS, and that unit/sanity tests are run automatically.
-
-### Manual Quality Assurance (QA) Testing
-
-Changes should be tested by somebody other than the developer who wrote the
-code. This is especially important for large or high-risk changes. It is useful
-to add a test plan to the pull request description if testing the changes is
-not straightforward.
-
-Translations
-------------
-
-Changes to translations as well as new translations can be submitted to
-[Bitcoin Core's Transifex page](https://www.transifex.com/projects/p/bitcoin/).
-
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
-
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
-
-Translators should also subscribe to the [mailing list](https://groups.google.com/forum/#!forum/bitcoin-translators).
+* Website: https://bithereum.network/
