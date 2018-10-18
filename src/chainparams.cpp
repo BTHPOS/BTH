@@ -182,10 +182,6 @@ public:
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
 
-        vSeeds.emplace_back("us-dnsseed.bithereum.network", true);
-        vSeeds.emplace_back("eu-dnsseed.bithereum.network", true);
-        vSeeds.emplace_back("sg-dnsseed.bithereum.network", true);
-
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,25);  // prefix: B
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,40);  // prefix: H
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);
@@ -311,10 +307,6 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-
-        vSeeds.emplace_back("us-testnet-dnsseed.bithereum.network", true);
-        vSeeds.emplace_back("eu-testnet-dnsseed.bithereum.network", true);
-        vSeeds.emplace_back("sg-testnet-dnsseed.bithereum.network", true);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,65); // prefix: T
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,63); // prefix: S
