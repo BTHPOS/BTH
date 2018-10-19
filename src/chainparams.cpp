@@ -236,7 +236,7 @@ public:
         consensus.BIP66Height = -1;
         consensus.BTHHeight = 1;
         consensus.BTHZawyLWMAHeight = -1; // Activated on testnet
-        consensus.BTHEquihashForkHeight = 14300;
+        consensus.BTHEquihashForkHeight = -1;
         consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
