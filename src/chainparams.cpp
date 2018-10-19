@@ -162,7 +162,7 @@ public:
         pchMessageStart[1] = 0x47;
         pchMessageStart[2] = 0x6d;
         pchMessageStart[3] = 0x44;
-        nDefaultPort = 8338; // different port than Bitcoin
+        nDefaultPort = 8333; // different port than Bitcoin
         nPruneAfterHeight = 100000;
         const size_t N = 200, K = 9;
         const size_t N2 = 144, K2 = 5;
@@ -289,7 +289,7 @@ public:
         pchMessageStart[1] = 0x48;
         pchMessageStart[2] = 0x6e;
         pchMessageStart[3] = 0x45;
-        nDefaultPort = 18338;
+        nDefaultPort = 18332;
         nPruneAfterHeight = 1000;
         const size_t N = 200, K = 9;
         const size_t N2 = 144, K2 = 5;
