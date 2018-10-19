@@ -41,7 +41,7 @@ int Equihash<N,K>::InitialiseState(eh_HashState& base_state, bool bth_salt)
     uint32_t le_K = htole32(K);
     unsigned char personalization[crypto_generichash_blake2b_PERSONALBYTES] = {};
     if (bth_salt) {
-        memcpy(personalization, "bethPoW", 8);
+        memcpy(personalization, "BethdPoW", 8);
     } else {
         memcpy(personalization, "ZcashPoW", 8);
     }
