@@ -56,7 +56,10 @@ struct Params {
     int64_t BTHMaxFutureBlockTime;
     /** Difficulty reduction blocks for Bitcoin GPU hard fork **/
     int BTHDifficultyReductionWindow;
-
+    /** Premining blocks for Bitcoin GPU hard fork **/
+    int BTHApprovalWindow;
+    bool BTHApprovalEnforceWhitelist;
+    
     /** Supplies **/
     int64_t BTHTxFeeAlloc;
     int64_t BTHEthereumSupplyAlloc;
