@@ -54,9 +54,9 @@ struct Params {
     int BTHEquihashForkHeight;
     /** Limit BITCOIN_MAX_FUTURE_BLOCK_TIME **/
     int64_t BTHMaxFutureBlockTime;
-    /** Difficulty reduction blocks for Bitcoin GPU hard fork **/
+    /** Difficulty reduction blocks for Bitcoin hard fork **/
     int BTHDifficultyReductionWindow;
-    /** Premining blocks for Bitcoin GPU hard fork **/
+    
     int BTHApprovalWindow;
     bool BTHApprovalEnforceWhitelist;
     
