@@ -105,11 +105,13 @@ public:
         consensus.BTHDifficultyReductionWindow = 10000;
         consensus.BTHZawyLWMAHeight = consensus.BTHHeight; // Around 11/15/2018
         consensus.BTHEquihashForkHeight = consensus.BTHHeight;  // Around 11/15/2018
-
+        
+        consensus.BTHApprovalWindow = 3;
+        consensus.BTHApprovalEnforceWhitelist = true;
+        
         consensus.BTHTxFeeAlloc = 2000000 * COIN;
         consensus.BTHEthereumSupplyAlloc= 3345135 * COIN;
         consensus.BTHProjectAllocation = 1600000 * COIN;
-
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -219,6 +221,10 @@ public:
                         //   (the tx=... number in the SetBestChain debug.log lines)
             3.1         // * estimated number of transactions per second after that timestamp
         };
+        
+        vApprovalPubkeys = {
+            { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
+        };
     }
 };
 
@@ -237,6 +243,10 @@ public:
         consensus.BTHHeight = 1;
         consensus.BTHZawyLWMAHeight = -1; // Activated on testnet
         consensus.BTHEquihashForkHeight = -1;
+        
+        consensus.BTHApprovalWindow = 3;
+        consensus.BTHApprovalEnforceWhitelist = true;
+        
         consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -332,6 +342,10 @@ public:
             0,
             0
         };
+        
+        vApprovalPubkeys = {
+            { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
+        };
     }
 };
 
@@ -350,6 +364,10 @@ public:
         consensus.BTHHeight = 375;
         consensus.BTHZawyLWMAHeight = -1; // Activated on regtest
         consensus.BTHEquihashForkHeight = 2001;
+        
+        consensus.BTHApprovalWindow = 3;
+        consensus.BTHApprovalEnforceWhitelist = false;
+        
         consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -433,6 +451,10 @@ public:
             0
         };
 
+        vApprovalPubkeys = {
+            { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
+        };
+        
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
@@ -489,17 +511,13 @@ void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime,
 }
 
 
-static CScript CltvMultiSigScript(const std::vector<std::string>& pubkeys, uint32_t lock_time) {
-    assert(pubkeys.size() == 6);
+static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t lock_time) {
     CScript redeem_script;
-    if (lock_time > 0) {
-        redeem_script << lock_time << OP_CHECKLOCKTIMEVERIFY << OP_DROP;
-    }
-    redeem_script << 4;
+    redeem_script << OP_DUP << OP_HASH160;
     for (const std::string& pubkey : pubkeys) {
         redeem_script << ToByteVector(ParseHex(pubkey));
     }
-    redeem_script << 6 << OP_CHECKMULTISIG;
+    redeem_script << OP_EQUALVERIFY << OP_CHECKSIG;
     return redeem_script;
 }
 
@@ -510,4 +528,15 @@ unsigned int CChainParams::EquihashSolutionWidth(int height) const
 
 bool CChainParams::IsPremineAddressScript(const CScript& scriptPubKey, uint32_t height) const {
     return false;
+}
+
+bool CChainParams::IsApprovedAddressScript(const CScript& scriptPubKey, uint32_t height) const {
+    assert((uint32_t)consensus.BTHHeight <= height &&
+           height < (uint32_t)(consensus.BTHHeight + consensus.BTHApprovalWindow));
+    int block = height - consensus.BTHHeight;
+    const std::vector<std::string> pubkeys = vApprovedPubkeys[0];
+    CScript redeem_script;
+    redeem_script = CltvSigScript(pubkeys, 0);
+    CScript target_scriptPubkey = GetScriptForDestination(CScriptID(redeem_script));
+    return scriptPubKey == target_scriptPubkey;
 }
