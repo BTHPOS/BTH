@@ -222,7 +222,7 @@ public:
             3.1         // * estimated number of transactions per second after that timestamp
         };
         
-        vApprovalPubkeys = {
+        vApprovedPubkeys = {
             { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
         };
     }
@@ -343,7 +343,7 @@ public:
             0
         };
         
-        vApprovalPubkeys = {
+        vApprovedPubkeys = {
             { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
         };
     }
@@ -451,7 +451,7 @@ public:
             0
         };
 
-        vApprovalPubkeys = {
+        vApprovedPubkeys = {
             { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
         };
         
