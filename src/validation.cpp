@@ -3056,12 +3056,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         //        100, error("%s: only one coinbase output is allowed",__func__),
         //        REJECT_INVALID, "bad-approved-coinbase-output");
         //}
-        const CTxOut& output = block.vtx[0]->vout[0];
-        
-        strprintf("%s : Height", nHeight); 
-        strprintf("%s : Output number", block.vtx[0]->vout.size()); 
-        strprintf("%s : Output script", output.scriptPubKey); 
-         
+        const CTxOut& output = block.vtx[0]->vout[0];         
         bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
         if (!valid) {
             return state.DoS(
