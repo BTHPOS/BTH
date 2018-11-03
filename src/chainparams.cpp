@@ -240,7 +240,7 @@ public:
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = -1;
         consensus.BIP66Height = -1;
-        consensus.BTHHeight = 1;
+        consensus.BTHHeight = 2;
         consensus.BTHZawyLWMAHeight = -1; // Activated on testnet
         consensus.BTHEquihashForkHeight = -1;
         
