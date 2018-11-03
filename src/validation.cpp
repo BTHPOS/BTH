@@ -3051,11 +3051,11 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
         consensusParams.BTHApprovalEnforceWhitelist)
     {
-        if (block.vtx[0]->vout.size() != 1) {
-            return state.DoS(
-                100, error("%s: only one coinbase output is allowed",__func__),
-                REJECT_INVALID, "bad-approved-coinbase-output");
-        }
+        //if (block.vtx[0]->vout.size() != 1) {
+        //    return state.DoS(
+        //        100, error("%s: only one coinbase output is allowed",__func__),
+        //        REJECT_INVALID, "bad-approved-coinbase-output");
+        //}
         const CTxOut& output = block.vtx[0]->vout[0];
         bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
         if (!valid) {
