@@ -3047,7 +3047,9 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
     }
 
      // Check for approved addresses during approval window
-     if (nHeight >= consensusParams.BTHHeight &&
+     if (block.nHeight >= consensusParams.BTHHeight &&
+        block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
+        nHeight >= consensusParams.BTHHeight &&
         nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
         consensusParams.BTHApprovalEnforceWhitelist)
     {
