@@ -310,10 +310,17 @@ public:
         nEquihashNnew = N2;
         nEquihashKnew = K2;
 
-        genesis = CreateGenesisBlock(1516123516, 0x56bd5142, 0x1d00ffff, 1, 50 * COIN);
+        //genesis = CreateGenesisBlock(1516123516, 0x56bd5142, 0x1d00ffff, 1, 50 * COIN);
+        //consensus.hashGenesisBlock = genesis.GetHash(consensus);
+        //assert(consensus.hashGenesisBlock == uint256S("0x00000000e0781ebe24b91eedc293adfea2f557b53ec379e78959de3853e6f9f6"));
+        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        
+        genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash(consensus);
-        assert(consensus.hashGenesisBlock == uint256S("0x00000000e0781ebe24b91eedc293adfea2f557b53ec379e78959de3853e6f9f6"));
+        assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+
+        
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
