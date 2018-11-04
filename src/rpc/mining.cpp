@@ -35,6 +35,9 @@
 
 #include <univalue.h>
 
+#include <string>
+using namespace std;
+
 unsigned int ParseConfirmTarget(const UniValue& value)
 {
     int target = value.get_int();
