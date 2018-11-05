@@ -515,7 +515,7 @@ void SelectParams(const std::string& network)
 void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout)
 {
     globalChainParams->UpdateVersionBitsParameters(d, nStartTime, nTimeout);
-}
+} 
 
 
 static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t lock_time) {
