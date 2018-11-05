@@ -3015,7 +3015,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     return true;
 }
 
-static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev)
+static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev, bool checkApproved)
 {
     const int nHeight = pindexPrev == nullptr ? 0 : pindexPrev->nHeight + 1;
 
@@ -3051,14 +3051,14 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
         nHeight >= consensusParams.BTHHeight &&
         nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
-        consensusParams.BTHApprovalEnforceWhitelist)
+        consensusParams.BTHApprovalEnforceWhitelist && checkApproved)
     {
         //if (block.vtx[0]->vout.size() != 1) {
         //    return state.DoS(
         //        100, error("%s: only one coinbase output is allowed",__func__),
         //        REJECT_INVALID, "bad-approved-coinbase-output");
         //}
-        const CTxOut& output = block.vtx[0]->vout[0];         
+        const CTxOut& output = block.vtx[0]->vout[0];
         bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
         if (!valid) {
             return state.DoS(
@@ -3066,7 +3066,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
                 REJECT_INVALID, "bad-approved-coinbase-scriptpubkey");
         }
     }
-    
+
     // Validation for witness commitments.
     // * We compute the witness hash (which is the hash including witnesses) of all the block's transactions, except the
     //   coinbase (where 0x0000....0000 is used instead).
@@ -3222,7 +3222,7 @@ static bool AcceptBlock(const std::shared_ptr<const CBlock>& pblock, CValidation
     if (fNewBlock) *fNewBlock = true;
 
     if (!CheckBlock(block, state, chainparams.GetConsensus()) ||
-        !ContextualCheckBlock(block, state, chainparams.GetConsensus(), pindex->pprev)) {
+        !ContextualCheckBlock(block, state, chainparams.GetConsensus(), pindex->pprev, true)) {
         if (state.IsInvalid() && !state.CorruptionPossible()) {
             pindex->nStatus |= BLOCK_FAILED_VALID;
             setDirtyBlockIndex.insert(pindex);
@@ -3292,7 +3292,7 @@ bool ProcessNewBlock(const CChainParams& chainparams, const std::shared_ptr<cons
     return true;
 }
 
-bool TestBlockValidity(CValidationState& state, const CChainParams& chainparams, const CBlock& block, CBlockIndex* pindexPrev, bool fCheckPOW, bool fCheckMerkleRoot)
+bool TestBlockValidity(CValidationState& state, const CChainParams& chainparams, const CBlock& block, CBlockIndex* pindexPrev, bool fCheckPOW, bool fCheckMerkleRoot, bool checkApproved)
 {
     AssertLockHeld(cs_main);
     assert(pindexPrev && pindexPrev == chainActive.Tip());
@@ -3306,7 +3306,7 @@ bool TestBlockValidity(CValidationState& state, const CChainParams& chainparams,
         return error("%s: Consensus::ContextualCheckBlockHeader: %s", __func__, FormatStateMessage(state));
     if (!CheckBlock(block, state, chainparams.GetConsensus(), fCheckPOW, fCheckMerkleRoot))
         return error("%s: Consensus::CheckBlock: %s", __func__, FormatStateMessage(state));
-    if (!ContextualCheckBlock(block, state, chainparams.GetConsensus(), pindexPrev))
+    if (!ContextualCheckBlock(block, state, chainparams.GetConsensus(), pindexPrev, checkApproved))
         return error("%s: Consensus::ContextualCheckBlock: %s", __func__, FormatStateMessage(state));
     if (!ConnectBlock(block, state, &indexDummy, viewNew, chainparams, true))
         return false;

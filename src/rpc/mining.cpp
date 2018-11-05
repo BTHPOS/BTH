@@ -359,8 +359,6 @@ std::string gbt_vb_name(const Consensus::DeploymentPos pos) {
 
 UniValue getblocktemplate(const JSONRPCRequest& request)
 {
-    cout << "INSIDE OF GET BLOCK TEMPLATE";
-    
     if (request.fHelp || request.params.size() > 1)
         throw std::runtime_error(
             "getblocktemplate ( TemplateRequest )\n"
@@ -489,8 +487,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
             if (!legacy_format && block.nHeight != (uint32_t)pindexPrev->nHeight + 1)
                 return "inconclusive-bad-height";
             CValidationState state;
-            cout << "TESTING VALIDITY 489";
-            TestBlockValidity(state, Params(), block, pindexPrev, false, true);
+            TestBlockValidity(state, Params(), block, pindexPrev, false, true, false);
             return BIP22ValidationResult(state);
         }
 
@@ -597,8 +594,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
 
         // Create new block
         CScript scriptDummy = CScript() << OP_TRUE;
-        cout << "CREATING DUMMY BLOCK 597";
-        pblocktemplate = BlockAssembler(Params()).CreateNewBlock(scriptDummy, fSupportsSegwit);
+        pblocktemplate = BlockAssembler(Params()).CreateNewBlock(scriptDummy, fSupportsSegwit, false);
         if (!pblocktemplate)
             throw JSONRPCError(RPC_OUT_OF_MEMORY, "Out of memory");
 
