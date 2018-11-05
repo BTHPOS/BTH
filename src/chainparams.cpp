@@ -105,10 +105,10 @@ public:
         consensus.BTHDifficultyReductionWindow = 10000;
         consensus.BTHZawyLWMAHeight = consensus.BTHHeight; // Around 11/15/2018
         consensus.BTHEquihashForkHeight = consensus.BTHHeight;  // Around 11/15/2018
-        
+
         consensus.BTHApprovalWindow = 3;
         consensus.BTHApprovalEnforceWhitelist = true;
-        
+
         consensus.BTHTxFeeAlloc = 2000000 * COIN;
         consensus.BTHEthereumSupplyAlloc= 3345135 * COIN;
         consensus.BTHProjectAllocation = 1600000 * COIN;
@@ -221,7 +221,7 @@ public:
                         //   (the tx=... number in the SetBestChain debug.log lines)
             3.1         // * estimated number of transactions per second after that timestamp
         };
-        
+
         vApprovedPubkeys = {
             { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
         };
@@ -243,10 +243,10 @@ public:
         consensus.BTHHeight = 2;
         consensus.BTHZawyLWMAHeight = -1; // Activated on testnet
         consensus.BTHEquihashForkHeight = -1;
-        
+
         consensus.BTHApprovalWindow = 3;
         consensus.BTHApprovalEnforceWhitelist = true;
-        
+
         consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -314,13 +314,13 @@ public:
         //consensus.hashGenesisBlock = genesis.GetHash(consensus);
         //assert(consensus.hashGenesisBlock == uint256S("0x00000000e0781ebe24b91eedc293adfea2f557b53ec379e78959de3853e6f9f6"));
         //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
-        
+
         genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash(consensus);
         assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
-        
+
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
@@ -349,7 +349,7 @@ public:
             0,
             0
         };
-        
+
         vApprovedPubkeys = {
             { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
         };
@@ -371,10 +371,10 @@ public:
         consensus.BTHHeight = 375;
         consensus.BTHZawyLWMAHeight = -1; // Activated on regtest
         consensus.BTHEquihashForkHeight = 2001;
-        
+
         consensus.BTHApprovalWindow = 3;
         consensus.BTHApprovalEnforceWhitelist = false;
-        
+
         consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -461,7 +461,7 @@ public:
         vApprovedPubkeys = {
             { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
         };
-        
+
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
@@ -522,7 +522,8 @@ static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t l
     CScript redeem_script;
     redeem_script << OP_DUP << OP_HASH160;
     for (const std::string& pubkey : pubkeys) {
-        redeem_script << ToByteVector(ParseHex(pubkey));
+         redeem_script << ToByteVector(ParseHex(pubkey));
+        //redeem_script << ParseHex(pubkey);
     }
     redeem_script << OP_EQUALVERIFY << OP_CHECKSIG;
     return redeem_script;
@@ -544,6 +545,7 @@ bool CChainParams::IsApprovedAddressScript(const CScript& scriptPubKey, uint32_t
     const std::vector<std::string> pubkeys = vApprovedPubkeys[0];
     CScript redeem_script;
     redeem_script = CltvSigScript(pubkeys, 0);
-    CScript target_scriptPubkey = GetScriptForDestination(CScriptID(redeem_script));
-    return scriptPubKey == target_scriptPubkey;
+    //CScript target_scriptPubkey = GetScriptForDestination(CScriptID(redeem_script));
+    //return scriptPubKey == target_scriptPubkey;
+    return scriptPubKey == redeem_script;
 }
