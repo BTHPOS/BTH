@@ -14,4 +14,4 @@ about: To report bugs in exchange for bounty reward
 
 **Attach applicable screenshots of bug**
 
-*Information about the specs of the computer or environment that this bug was noticed on (e.g. Operating System, RAM/Memory, Version of build, etc).*
+**Information about the specs of the computer or environment that this bug was noticed on (e.g. Operating System, RAM/Memory, Version of build, etc).**
