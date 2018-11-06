@@ -113,7 +113,7 @@ bool DecodeHexTx(CMutableTransaction& tx, const std::string& strHexTx, bool fTry
     if (!IsHex(strHexTx)) {
         return false;
     }
-LogPrintf("TX HEX:  %s\n", strHexTx);
+
     std::vector<unsigned char> txData(ParseHex(strHexTx));
 
     if (fTryNoWitness) {
@@ -147,7 +147,7 @@ bool DecodeHexBlk(CBlock& block, const std::string& strHexBlk, bool fLegacyForma
 {
     if (!IsHex(strHexBlk))
         return false;
-    LogPrintf("BLOCK HEX:  %s\n", strHexBlk);
+
     std::vector<unsigned char> blockData(ParseHex(strHexBlk));
     int ser_flags = fLegacyFormat ? SERIALIZE_BLOCK_LEGACY : 0;
     CDataStream ssBlock(blockData, SER_NETWORK, PROTOCOL_VERSION | ser_flags);
