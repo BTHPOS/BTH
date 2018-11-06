@@ -523,6 +523,7 @@ static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t l
     redeem_script << OP_DUP << OP_HASH160;
     for (const std::string& pubkey : pubkeys) {
          redeem_script << ToByteVector(ParseHex(pubkey));
+         LogPrintf("PUBLIC KEY:  %s\n", pubkey);
         //redeem_script << ParseHex(pubkey);
     }
     redeem_script << OP_EQUALVERIFY << OP_CHECKSIG;
