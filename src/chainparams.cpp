@@ -545,6 +545,9 @@ bool CChainParams::IsApprovedAddressScript(const CScript& scriptPubKey, uint32_t
     const std::vector<std::string> pubkeys = vApprovedPubkeys[0];
     CScript redeem_script;
     redeem_script = CltvSigScript(pubkeys, 0);
+    LogPrintf("redeem_script=%s", HexStr(redeem_script));
+    LogPrintf("vApprovedPubkeys=%s", vApprovedPubkeys[0]);
+    LogPrintf("vApprovedPubkeys=%s", HexStr(scriptPubKey));
     //CScript target_scriptPubkey = GetScriptForDestination(CScriptID(redeem_script));
     //return scriptPubKey == target_scriptPubkey;
     return scriptPubKey == redeem_script;
