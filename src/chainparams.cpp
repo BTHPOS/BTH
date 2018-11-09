@@ -351,7 +351,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
+            { "b6debf102ad0602aad44fb04d5a108a9c09b1f19"}
         };
     }
 };
@@ -459,7 +459,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
+            { "b6debf102ad0602aad44fb04d5a108a9c09b1f19"}
         };
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
@@ -523,7 +523,6 @@ static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t l
     redeem_script << OP_DUP << OP_HASH160;
     for (const std::string& pubkey : pubkeys) {
          redeem_script << ToByteVector(ParseHex(pubkey));
-        //redeem_script << ParseHex(pubkey);
     }
     redeem_script << OP_EQUALVERIFY << OP_CHECKSIG;
     return redeem_script;
@@ -547,8 +546,8 @@ bool CChainParams::IsApprovedAddressScript(const CScript& scriptPubKey, uint32_t
     redeem_script = CltvSigScript(pubkeys, 0);
     LogPrintf("redeem_script=%s\n", HexStr(redeem_script));
     LogPrintf("scriptPubKey=%s\n", HexStr(scriptPubKey));
-    CScript target_scriptPubkey = GetScriptForDestination(CScriptID(redeem_script));
-    LogPrintf("target_scriptPubkey=%s\n", HexStr(target_scriptPubkey));
+    //CScript target_scriptPubkey = GetScriptForDestination(CScriptID(redeem_script));
+    //LogPrintf("target_scriptPubkey=%s\n", HexStr(target_scriptPubkey));
     //return scriptPubKey == target_scriptPubkey;
     return scriptPubKey == redeem_script;
 }
