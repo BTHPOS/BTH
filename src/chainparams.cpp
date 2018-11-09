@@ -223,7 +223,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "02a3b62c8e15899f8ba1744b484f756658d55fee9b82c097ae4ad08d449126ef12"}
+            { "b6debf102ad0602aad44fb04d5a108a9c09b1f19"}
         };
     }
 };
