@@ -164,7 +164,7 @@ public:
         pchMessageStart[1] = 0x47;
         pchMessageStart[2] = 0x6d;
         pchMessageStart[3] = 0x44;
-        nDefaultPort = 8333; // different port than Bitcoin
+        nDefaultPort = 18553; // different port than Bitcoin
         nPruneAfterHeight = 100000;
         const size_t N = 200, K = 9;
         const size_t N2 = 144, K2 = 5;
@@ -299,7 +299,7 @@ public:
         pchMessageStart[1] = 0x48;
         pchMessageStart[2] = 0x6e;
         pchMessageStart[3] = 0x45;
-        nDefaultPort = 18332;
+        nDefaultPort = 19553;
         nPruneAfterHeight = 1000;
         const size_t N = 200, K = 9;
         const size_t N2 = 144, K2 = 5;
@@ -310,16 +310,10 @@ public:
         nEquihashNnew = N2;
         nEquihashKnew = K2;
 
-        //genesis = CreateGenesisBlock(1516123516, 0x56bd5142, 0x1d00ffff, 1, 50 * COIN);
-        //consensus.hashGenesisBlock = genesis.GetHash(consensus);
-        //assert(consensus.hashGenesisBlock == uint256S("0x00000000e0781ebe24b91eedc293adfea2f557b53ec379e78959de3853e6f9f6"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
-
-        genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1516123516, 0x56bd5142, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash(consensus);
-        assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000000e0781ebe24b91eedc293adfea2f557b53ec379e78959de3853e6f9f6"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
-
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -336,7 +330,6 @@ public:
         fDefaultConsistencyChecks = false;
         fRequireStandard = false;
         fMineBlocksOnDemand = false;
-
 
         checkpointData = (CCheckpointData) {
             {
@@ -423,7 +416,7 @@ public:
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
 
-        nDefaultPort = 18444;
+        nDefaultPort = 20553;
         nPruneAfterHeight = 1000;
         const size_t N = 48, K = 5;
         const size_t N2 = 96, K2 = 5;
@@ -515,7 +508,7 @@ void SelectParams(const std::string& network)
 void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout)
 {
     globalChainParams->UpdateVersionBitsParameters(d, nStartTime, nTimeout);
-} 
+}
 
 
 static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t lock_time) {
