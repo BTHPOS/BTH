@@ -97,20 +97,20 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 210000;
-        consensus.BIP34Height = -1;
+        consensus.BIP34Height = 227931;
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
-        consensus.BIP65Height = -1; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
-        consensus.BIP66Height = -1; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
-        consensus.BTHHeight = 1; // Around 11/15/2018 12:00 UTC
-        consensus.BTHDifficultyReductionWindow = 10000;
-        consensus.BTHZawyLWMAHeight = consensus.BTHHeight; // Around 11/15/2018
-        consensus.BTHEquihashForkHeight = consensus.BTHHeight;  // Around 11/15/2018
+        consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
+        consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
+        consensus.BTHHeight = 555555; // Around 12/28/2018 19:00 UTC | ETH Fork Height: 6,874,581 @ 1 BTH = 38 ETH
+        consensus.BTHDifficultyReductionWindow = 20000;
+        consensus.BTHZawyLWMAHeight = consensus.BTHHeight; // Around 12/28/2018 19:00 UTC
+        consensus.BTHEquihashForkHeight = consensus.BTHHeight;  // Around 12/28/2018 19:00 UTC
 
-        consensus.BTHApprovalWindow = 3;
+        consensus.BTHApprovalWindow = 5;
         consensus.BTHApprovalEnforceWhitelist = true;
 
         consensus.BTHTxFeeAlloc = 2000000 * COIN;
-        consensus.BTHEthereumSupplyAlloc= 3345135 * COIN;
+        consensus.BTHEthereumSupplyAlloc= 2730446 * COIN;
         consensus.BTHProjectAllocation = 1600000 * COIN;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
