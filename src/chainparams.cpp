@@ -110,7 +110,7 @@ public:
         consensus.BTHApprovalEnforceWhitelist = true;
 
         consensus.BTHTxFeeAlloc = 2000000 * COIN;
-        consensus.BTHEthereumSupplyAlloc= 2730446 * COIN;
+        consensus.BTHEthereumSupplyAlloc= 2730450 * COIN;
         consensus.BTHProjectAllocation = 1600000 * COIN;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
