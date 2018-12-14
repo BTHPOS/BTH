@@ -227,7 +227,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "75de882dbf3a616cd042bc6ad5fd3e7072c4900a"}
+            { "9ab0f8a3119b474b0f1a5f19f41e282e634ef391"}
         };
     }
 };
@@ -352,7 +352,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "75de882dbf3a616cd042bc6ad5fd3e7072c4900a"}
+            { "9ab0f8a3119b474b0f1a5f19f41e282e634ef391"}
         };
     }
 };
@@ -460,7 +460,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "75de882dbf3a616cd042bc6ad5fd3e7072c4900a"}
+            { "9ab0f8a3119b474b0f1a5f19f41e282e634ef391"}
         };
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
@@ -529,8 +529,17 @@ static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t l
     return redeem_script;
 }
 
-unsigned int CChainParams::EquihashSolutionWidth(int height) const
-{
+static CScript MltvSigScript(const std::vector<std::string>& pubkeys, uint32_t lock_time) {
+    CScript redeem_script;
+    redeem_script << OP_HASH160;
+    for (const std::string& pubkey : pubkeys) {
+         redeem_script << ToByteVector(ParseHex(pubkey));
+    }
+    redeem_script << OP_EQUAL;
+    return redeem_script;
+}
+
+unsigned int CChainParams::EquihashSolutionWidth(int height) const {
     return EhSolutionWidth(EquihashN(height), EquihashK(height));
 }
 
@@ -544,7 +553,7 @@ bool CChainParams::IsApprovedAddressScript(const CScript& scriptPubKey, uint32_t
     int block = height - consensus.BTHHeight;
     const std::vector<std::string> pubkeys = vApprovedPubkeys[0];
     CScript redeem_script;
-    redeem_script = CltvSigScript(pubkeys, 0);
+    redeem_script = MltvSigScript(pubkeys, 0);
     LogPrintf("redeem_script=%s\n", HexStr(redeem_script));
     LogPrintf("scriptPubKey=%s\n", HexStr(scriptPubKey));
     return scriptPubKey == redeem_script;

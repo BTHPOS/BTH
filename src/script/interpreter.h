@@ -32,7 +32,7 @@ enum
 enum
 {
     FORKID_BCC = 0,
-    FORKID_BTH = 79, // Atomic number AU
+    FORKID_BTH = 85, // Atomic number AU
 };
 
 static const int FORKID_IN_USE = FORKID_BTH;
