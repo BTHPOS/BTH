@@ -227,7 +227,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "9ab0f8a3119b474b0f1a5f19f41e282e634ef391"}
+            { "02e6db859bd48db0f22e3e4c28039b719990dc68"}
         };
     }
 };
@@ -352,7 +352,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "9ab0f8a3119b474b0f1a5f19f41e282e634ef391"}
+            { "02e6db859bd48db0f22e3e4c28039b719990dc68"}
         };
     }
 };
@@ -460,7 +460,7 @@ public:
         };
 
         vApprovedPubkeys = {
-            { "9ab0f8a3119b474b0f1a5f19f41e282e634ef391"}
+            { "02e6db859bd48db0f22e3e4c28039b719990dc68"}
         };
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
