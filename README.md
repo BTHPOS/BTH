@@ -1,7 +1,5 @@
 # Bithereum
 
-[![BuildStatus](https://travis-ci.org/BTHPOS/BTHPOS.svg?branch=master)](https://travis-ci.org/BTHPOS/BTHPOS)
-
 Bithereum (codename BTH) will begin as a fork of Bitcoin and will then be mined as a separate chain shortly after.
 
 The primary goal is to maintain a variant of Bitcoin that is centered around Proof of Stake and Ethereum's technological roadmap ultimately democratizing mining efforts, improving scalability, and increasing network consensus.
