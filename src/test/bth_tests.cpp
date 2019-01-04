@@ -7,14 +7,14 @@
 #include "streams.h"
 #include "version.h"
 #include "primitives/block.h"
-#include "test/btg_cltv_multisig_data.h"
+#include "test/bth_cltv_multisig_data.h"
 #include "test/test_bitcoin.h"
 
 #include <stdint.h>
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(btg_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(bth_tests, BasicTestingSetup)
 
 // Taken from Zcash project to test the compability.
 class ZcashBlockHeader
@@ -47,25 +47,25 @@ public:
 
 BOOST_AUTO_TEST_CASE(zcash_header_compatible)
 {
-    CBlockHeader btg_header;
+    CBlockHeader bth_header;
     ZcashBlockHeader zcash_header;
     CDataStream ss(SER_DISK, PROTOCOL_VERSION);
 
     // `CBlockHeader.nHeight` should be placed in the first 4 bytes of `ZcashBlockHeader.hashReserved`.
-    btg_header.nHeight = 10000000;
+    bth_header.nHeight = 10000000;
     // `CBlockHeader.nReserved[5:7]` should be placed in the last 8 bytes of `ZcashBlockHeader.hashReserved`.
-    btg_header.nReserved[5] = 1234;
-    btg_header.nReserved[6] = 0;
-    btg_header.nSolution = std::vector<unsigned char> {
+    bth_header.nReserved[5] = 1234;
+    bth_header.nReserved[6] = 0;
+    bth_header.nSolution = std::vector<unsigned char> {
         0x11, 0x22, 0x33
     };
 
-    ss << btg_header;
+    ss << bth_header;
     ss >> zcash_header;
 
-    BOOST_CHECK_EQUAL(btg_header.nHeight, (uint32_t)zcash_header.hashReserved.GetUint64(0));
-    BOOST_CHECK_EQUAL(btg_header.nReserved[5], (uint32_t)zcash_header.hashReserved.GetUint64(3));
-    BOOST_CHECK_EQUAL(btg_header.nSolution[2], zcash_header.nSolution[2]);
+    BOOST_CHECK_EQUAL(bth_header.nHeight, (uint32_t)zcash_header.hashReserved.GetUint64(0));
+    BOOST_CHECK_EQUAL(bth_header.nReserved[5], (uint32_t)zcash_header.hashReserved.GetUint64(3));
+    BOOST_CHECK_EQUAL(bth_header.nSolution[2], zcash_header.nSolution[2]);
 }
 
 // For address conversion.

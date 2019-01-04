@@ -59,7 +59,7 @@ BASE_SCRIPTS= [
     # vv Tests less than 5m vv
     'p2p-fullblocktest.py',
     'fundrawtransaction.py',
-    # TODO(Dondrey): Temporarily disabled: 'p2p-compactblocks.py', 'btg-hardfork.py'
+    # TODO(Dondrey): Temporarily disabled: 'p2p-compactblocks.py', 'bth-hardfork.py'
     'segwit.py',
     # vv Tests less than 2m vv
     'wallet.py',
@@ -120,7 +120,7 @@ BASE_SCRIPTS= [
     'bip65-cltv-p2p.py',
     'uptime.py',
     'resendwallettransactions.py',
-    'btg-timelock.py',
+    'bth-timelock.py',
 ]
 
 EXTENDED_SCRIPTS = [
@@ -162,7 +162,7 @@ NON_SCRIPTS = [
     "test_runner.py",
     # TODO(Dondrey): Temporarily disabled:
     "p2p-compactblocks.py",
-    'btg-hardfork.py',
+    'bth-hardfork.py',
 ]
 
 def main():
