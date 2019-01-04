@@ -258,7 +258,7 @@ public:
 
         nVersion       = block.nVersion;
         hashMerkleRoot = block.hashMerkleRoot;
-        // TODO(h4x3rotab): Copy nHeight or not?
+        // TODO(Dondrey): Copy nHeight or not?
         nHeight        = block.nHeight;
         memcpy(nReserved, block.nReserved, sizeof(nReserved));
         nTime          = block.nTime;

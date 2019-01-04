@@ -35,9 +35,6 @@
 
 #include <univalue.h>
 
-#include <string>
-using namespace std;
-
 unsigned int ParseConfirmTarget(const UniValue& value)
 {
     int target = value.get_int();
@@ -90,7 +87,7 @@ UniValue GetNetworkHashPS(int lookup, int height) {
     return workDiff.getdouble() / timeDiff;
 }
 
-// TODO(h4x3rotab): Implement RPC `getlocalsolps`, and maybe `getnetworksolps` as a alias of `getnetworkhashps`.
+// TODO(Dondrey): Implement RPC `getlocalsolps`, and maybe `getnetworksolps` as a alias of `getnetworkhashps`.
 
 UniValue getnetworkhashps(const JSONRPCRequest& request)
 {
@@ -188,13 +185,13 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
                 std::function<bool(std::vector<unsigned char>)> validBlock =
                         [&pblock](std::vector<unsigned char> soln) {
                     pblock->nSolution = soln;
-                    // TODO(h4x3rotab): Add metrics counter like Zcash? `solutionTargetChecks.increment();`
-                    // TODO(h4x3rotab): Maybe switch to EhBasicSolve and better deal with `nMaxTries`?
+                    // TODO(Dondrey): Add metrics counter like Zcash? `solutionTargetChecks.increment();`
+                    // TODO(Dondrey): Maybe switch to EhBasicSolve and better deal with `nMaxTries`?
                     return CheckProofOfWork(pblock->GetHash(), pblock->nBits, true, Params().GetConsensus());
                 };
                 bool found = EhBasicSolveUncancellable(n, k, curr_state, validBlock);
                 --nMaxTries;
-                // TODO(h4x3rotab): Add metrics counter like Zcash? `ehSolverRuns.increment();`
+                // TODO(Dondrey): Add metrics counter like Zcash? `ehSolverRuns.increment();`
                 if (found) {
                     break;
                 }
@@ -720,7 +717,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         // Note that this can probably also be removed entirely after the first BIP9 non-force deployment (ie, probably segwit) gets activated
         aMutable.push_back("version/force");
     }
-    // TODO(h4x3rotab): Return nHeight?
+    // TODO(Dondrey): Return nHeight?
     result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
     result.push_back(Pair("transactions", transactions));
     result.push_back(Pair("coinbaseaux", aux));

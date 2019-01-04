@@ -124,7 +124,7 @@ class MiningTest(BitcoinTestFramework):
         bad_block.hashPrevBlock = 123
         assert_template(node, bad_block, 'inconclusive-not-best-prevblk')
 
-        # TODO(h4x3rotab): Test new block format.
+        # TODO(Dondrey): Test new block format.
 
 if __name__ == '__main__':
     MiningTest().main()

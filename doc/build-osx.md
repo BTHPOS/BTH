@@ -27,12 +27,12 @@ NOTE: Building with Qt4 is still supported, however, could result in a broken UI
 Build Bithereum
 ------------------------
 
-1. Clone the Bithereum source code and cd into `BTH`
+1. Clone the Bithereum source code and cd into `BTHPOS`
 
         git clone https://github.com/BTHPOS/BTH
-        cd BTH
+        cd BTHPOS
 
-2.  Build BTH:
+2.  Build BTHPOS:
 
     Configure and build the headless bitcoin binaries as well as the GUI (if Qt is found).
 
@@ -57,15 +57,15 @@ Bithereum is now available at `./src/bethd`
 
 Before running, it's recommended you create an RPC configuration file.
 
-    echo -e "rpcuser=bitcoinrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "$HOME/Library/Application Support/bithereum/bithereum.conf"
+    echo -e "rpcuser=bitcoinrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "$HOME/Library/Application Support/Bithereum/bithereum.conf"
 
-    chmod 600 "$HOME/Library/Application Support/bithereum/bithereum.conf"
+    chmod 600 "$HOME/Library/Application Support/Bithereum/bithereum.conf"
 
 The first time you run bethd, it will start downloading the blockchain. This process could take several hours.
 
 You can monitor the download process by looking at the debug.log file:
 
-    tail -f $HOME/Library/Application\ Support/bithereum/debug.log
+    tail -f $HOME/Library/Application\ Support/Bithereum/debug.log
 
 Other commands:
 -------

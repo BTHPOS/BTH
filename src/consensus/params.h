@@ -46,7 +46,7 @@ struct Params {
     int BIP65Height;
     /** Block height at which BIP66 becomes active */
     int BIP66Height;
-    /** Block height at which Bitcoin GPU hard fork becomes active */
+    /** Block height at which Bithereum hard fork becomes active */
     int BTHHeight;
     /** Block height at which Zawy's LWMA difficulty algorithm becomes active */
     int BTHZawyLWMAHeight;
@@ -54,12 +54,12 @@ struct Params {
     int BTHEquihashForkHeight;
     /** Limit BITCOIN_MAX_FUTURE_BLOCK_TIME **/
     int64_t BTHMaxFutureBlockTime;
-    /** Difficulty reduction blocks for Bitcoin hard fork **/
-    int BTHDifficultyReductionWindow;
-    
+
+    /** Approval blocks after hard fork block **/
     int BTHApprovalWindow;
+    int BTHDifficultyReductionWindow;
     bool BTHApprovalEnforceWhitelist;
-    
+
     /** Supplies **/
     int64_t BTHTxFeeAlloc;
     int64_t BTHEthereumSupplyAlloc;

@@ -20,7 +20,7 @@ Bithereum preserves and implements Bitcoin features such as SegWit but also focu
     - SegWit
     - Replay protection (SIGHASH_FORK_ID)
     - Lightning Network upcoming
-    - Full Node Incentivization 
+    - Full Node Incentivization
 
 Though Proof of Stake will take some time to implement, even in the case of Ethereum, it is on the horizon of completion. Bithereum, however, will begin mining prior to its completion through the Proof of Work algorithm known as Equihash. Once PoS is complete, miners will be able to stake their holdings for dividend-like returns. Bithereum will be leveraging existing OpCodes as well as introducing several new OpCodes to create its PoS model. Furthermore, everyone who runs a Bithereum full node will be rewarded with a portion of Bithereum’s official mining pool’s fees, addressing the misalignment of incentives for full nodes present in most other chains.
 

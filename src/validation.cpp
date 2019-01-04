@@ -1090,10 +1090,10 @@ bool IsInitialBlockDownload()
         return true;
     if (chainActive.Tip() == nullptr)
         return true;
-    //if (chainActive.Tip()->nChainWork < UintToArith256(chainParams.GetConsensus().nMinimumChainWork))
-    //    return true;
-    //if (chainActive.Tip()->GetBlockTime() < (GetTime() - nMaxTipAge))
-    //    return true;
+    if (chainActive.Tip()->nChainWork < UintToArith256(chainParams.GetConsensus().nMinimumChainWork))
+        return true;
+//     if (chainActive.Tip()->GetBlockTime() < (GetTime() - nMaxTipAge))
+//         return true;
     LogPrintf("Leaving InitialBlockDownload (latching to false)\n");
     latchToFalse.store(true, std::memory_order_relaxed);
     return false;
@@ -1242,7 +1242,12 @@ void UpdateCoins(const CTransaction& tx, CCoinsViewCache& inputs, int nHeight)
 bool CScriptCheck::operator()() {
     const CScript &scriptSig = ptxTo->vin[nIn].scriptSig;
     const CScriptWitness *witness = &ptxTo->vin[nIn].scriptWitness;
-    return VerifyScript(scriptSig, scriptPubKey, witness, nFlags, CachingTransactionSignatureChecker(ptxTo, nIn, amount, cacheStore, *txdata), &error);
+    //return VerifyScript(scriptSig, scriptPubKey, witness, nFlags, CachingTransactionSignatureChecker(ptxTo, nIn, amount, cacheStore, *txdata), &error);
+    bool ret = VerifyScript(scriptSig, scriptPubKey, witness, nFlags, CachingTransactionSignatureChecker(ptxTo, nIn, amount, cacheStore, *txdata), &error);
+    if (ret != true) {
+        LogPrintf(">>>script check false, %d, %d, %d, %s\n", nIn, error, nFlags, ptxTo->GetHash().ToString());
+    }
+    return ret;   
 }
 
 int GetSpendHeight(const CCoinsViewCache& inputs)
@@ -3046,18 +3051,13 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         }
     }
 
-     // Check for approved addresses during approval window
-     if (block.nHeight >= consensusParams.BTHHeight &&
-        block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
-        nHeight >= consensusParams.BTHHeight &&
-        nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
-        consensusParams.BTHApprovalEnforceWhitelist && checkApproved)
+
+    if (block.nHeight >= consensusParams.BTHHeight &&
+       block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
+       nHeight >= consensusParams.BTHHeight &&
+       nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
+       consensusParams.BTHApprovalEnforceWhitelist && checkApproved)
     {
-        //if (block.vtx[0]->vout.size() != 1) {
-        //    return state.DoS(
-        //        100, error("%s: only one coinbase output is allowed",__func__),
-        //        REJECT_INVALID, "bad-approved-coinbase-output");
-        //}
         const CTxOut& output = block.vtx[0]->vout[0];
         bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
         if (!valid) {
@@ -3066,6 +3066,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
                 REJECT_INVALID, "bad-approved-coinbase-scriptpubkey");
         }
     }
+
 
     // Validation for witness commitments.
     // * We compute the witness hash (which is the hash including witnesses) of all the block's transactions, except the

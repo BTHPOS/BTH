@@ -17,9 +17,9 @@ osx=true
 SIGNER=
 VERSION=
 commit=false
-url=https://github.com/BETH/BETH
-gsigsUrl=https://github.com/BETH/gitian.sigs
-detachUrl=https://github.com/BETH/bithereum-detached-sigs
+url=https://github.com/BTHPOS/BTH
+gsigsUrl=https://github.com/BTHPOS/gitian.sigs
+detachUrl=https://github.com/BTHPOS/bithereum-detached-sigs
 proc=2
 mem=2000
 lxc=true
@@ -41,9 +41,9 @@ version		Version number, commit, or branch to build. If building a commit or bra
 
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
--u|--url	Specify the URL of the bithereum repository. Default is https://github.com/BETH/BETH
--g|--gsigsUrl	Specify the URL of the gitian.sigs repository. Default is https://github.com/BETH/gitian.sigs
--d|--detachUrl	Specify the URL of the bithereum-detached-sigs repository. Default is https://github.com/BETH/bithereum-detached-sigs
+-u|--url	Specify the URL of the bithereum repository. Default is https://github.com/BTHPOS/BTH
+-g|--gsigsUrl	Specify the URL of the gitian.sigs repository. Default is https://github.com/BTHPOS/gitian.sigs
+-d|--detachUrl	Specify the URL of the bithereum-detached-sigs repository. Default is https://github.com/BTHPOS/bithereum-detached-sigs
 -v|--verify 	Verify the Gitian build
 -b|--build	Do a Gitian build
 -s|--sign	Make signed binaries for Windows and Mac OSX
@@ -283,7 +283,7 @@ then
 fi
 
 # Set up build
-pushd ./BETH
+pushd ./BTHPOS
 git fetch
 git checkout ${COMMIT}
 popd
@@ -302,7 +302,7 @@ then
 	mkdir -p inputs
 	wget -N -P inputs $osslPatchUrl
 	wget -N -P inputs $osslTarUrl
-	make -C ../BETH/depends download SOURCES_PATH=`pwd`/cache/common
+	make -C ../BTHPOS/depends download SOURCES_PATH=`pwd`/cache/common
 
 	# Linux
 	if [[ $linux = true ]]
@@ -310,8 +310,8 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Linux"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit BETH=${COMMIT} --url BETH=${url} ../BETH/contrib/gitian-descriptors/gitian-linux.yml
-	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-linux.yml
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit BTHPOS=${COMMIT} --url BTHPOS=${url} ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
+	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
 	    mv build/out/bithereum-*.tar.gz build/out/src/bithereum-*.tar.gz ../bitcoin-binaries/${VERSION}
 	fi
 	# Windows
@@ -322,7 +322,7 @@ then
         	echo ""
         	echo "Starting Utilities build for Windows"
         	echo ""
-        	./bin/gbuild -j ${proc} -m ${mem} --allow-sudo ../BETH/contrib/gitian-descriptors/gitian-win-utils.yml
+        	./bin/gbuild -j ${proc} -m ${mem} --allow-sudo ../BTHPOS/contrib/gitian-descriptors/gitian-win-utils.yml
         	if [ $? -ne 0 ];
         	then
         	    echo ""
@@ -340,8 +340,8 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit BETH=${COMMIT} --url BETH=${url} ../BETH/contrib/gitian-descriptors/gitian-win.yml
-	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-win.yml
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit BTHPOS=${COMMIT} --url BTHPOS=${url} ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
+	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
 	    mv build/out/bithereum-*-win-unsigned.tar.gz inputs/bithereum-win-unsigned.tar.gz
 	    mv build/out/bithereum-*.zip build/out/bithereum-*.exe ../bitcoin-binaries/${VERSION}
 	fi
@@ -351,8 +351,8 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit BETH=${COMMIT} --url BETH=${url} ../BETH/contrib/gitian-descriptors/gitian-osx.yml
-	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-osx.yml
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit BTHPOS=${COMMIT} --url BTHPOS=${url} ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
+	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
 	    mv build/out/bithereum-*-osx-unsigned.tar.gz inputs/bithereum-osx-unsigned.tar.gz
 	    mv build/out/bithereum-*.tar.gz build/out/bithereum-*.dmg ../bitcoin-binaries/${VERSION}
 	fi
@@ -381,27 +381,27 @@ then
 	echo ""
 	echo "Verifying v${VERSION} Linux"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../BETH/contrib/gitian-descriptors/gitian-linux.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
 	# Windows
 	echo ""
 	echo "Verifying v${VERSION} Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../BETH/contrib/gitian-descriptors/gitian-win.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
 	# Mac OSX
 	echo ""
 	echo "Verifying v${VERSION} Mac OSX"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../BETH/contrib/gitian-descriptors/gitian-osx.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
 	# Signed Windows
 	echo ""
 	echo "Verifying v${VERSION} Signed Windows"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
 	# Signed Mac OSX
 	echo ""
 	echo "Verifying v${VERSION} Signed Mac OSX"
 	echo ""
-	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
 	popd
 fi
 
@@ -416,8 +416,8 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Windows"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} --url signature=${detachUrl} ../BETH/contrib/gitian-descriptors/gitian-win-signer.yml
-	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-win-signer.yml
+	    ./bin/gbuild -i --commit signature=${COMMIT} --url signature=${detachUrl} ../BTHPOS/contrib/gitian-descriptors/gitian-win-signer.yml
+	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-win-signer.yml
 	    mv build/out/bithereum-*win64-setup.exe ../bitcoin-binaries/${VERSION}
 	    mv build/out/bithereum-*win32-setup.exe ../bitcoin-binaries/${VERSION}
 	fi
@@ -427,8 +427,8 @@ then
 	    echo ""
 	    echo "Signing ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -i --commit signature=${COMMIT} --url signature=${detachUrl} ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
-	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    ./bin/gbuild -i --commit signature=${COMMIT} --url signature=${detachUrl} ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
+	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
 	    mv build/out/bithereum-osx-signed.dmg ../bitcoin-binaries/${VERSION}/bithereum-${VERSION}-osx.dmg
 	fi
 	popd

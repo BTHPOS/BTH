@@ -13,7 +13,7 @@
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return @"org.bitcoingpu.bithereum-Qt";
+        return @"org.bitcoingpu.Bithereum-Qt";
     } else {
         return [self __bundleIdentifier];
     }

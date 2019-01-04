@@ -101,17 +101,12 @@ public:
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
-        consensus.BTHHeight = 555555; // Around 12/28/2018 19:00 UTC | ETH Fork Height: 6,874,581 @ 1 BTH = 38 ETH
+        consensus.BTHHeight = 555555; // At or around 12/26/2018 12:00 UTC
         consensus.BTHDifficultyReductionWindow = 20000;
-        consensus.BTHZawyLWMAHeight = consensus.BTHHeight; // Around 12/28/2018 19:00 UTC
-        consensus.BTHEquihashForkHeight = consensus.BTHHeight;  // Around 12/28/2018 19:00 UTC
-
-        consensus.BTHApprovalWindow = 5;
+        consensus.BTHZawyLWMAHeight = consensus.BTHHeight;
+        consensus.BTHApprovalWindow = 20;
+        consensus.BTHEquihashForkHeight = consensus.BTHHeight;
         consensus.BTHApprovalEnforceWhitelist = true;
-
-        consensus.BTHTxFeeAlloc = 2000000 * COIN;
-        consensus.BTHEthereumSupplyAlloc= 2730450 * COIN;
-        consensus.BTHProjectAllocation = 1600000 * COIN;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -150,28 +145,28 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1510704000; // November 15th, 2017.
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000723d3581fe1bd55373540a");
-
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000047e6d2d75a348b3f02a2905"); // work for 555,554
+        
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x0000000000000000003b9ce759c2a087d52abc4266f8f4ebd6d768b89defa50a"); //477890
+
+
+        // Allocations
+        consensus.BTHTxFeeAlloc = 2000000 * COIN;
+        consensus.BTHEthereumSupplyAlloc= 2730450 * COIN;
+        consensus.BTHProjectAllocation = 1600000 * COIN;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-//         pchMessageStart[0] = 0xe1;
-//         pchMessageStart[1] = 0x47;
-//         pchMessageStart[2] = 0x6d;
-//         pchMessageStart[3] = 0x44;
-//         nDefaultPort = 18553; // different port than Bitcoin
-        
-        pchMessageStart[0] = 0xf9;
-        pchMessageStart[1] = 0xbe;
-        pchMessageStart[2] = 0xb4;
-        pchMessageStart[3] = 0xd9;
-        nDefaultPort = 8333;
-        
+        pchMessageStart[0] = 0xe3;
+        pchMessageStart[1] = 0x48;
+        pchMessageStart[2] = 0x6a;
+        pchMessageStart[3] = 0x45;
+        nDefaultPort = 18553;
+
         nPruneAfterHeight = 100000;
         const size_t N = 200, K = 9;
         const size_t N2 = 144, K2 = 5;
@@ -209,6 +204,7 @@ public:
 
         checkpointData = (CCheckpointData) {
             {
+                { 0, uint256S("000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f")},
                 { 11111, uint256S("0x0000000069e244f73d78e8fd29ba2fd2ed618bd6fa2ee92559f542fdb26e7c1d")},
                 { 33333, uint256S("0x000000002dd5588a74784eaa7ab0507a18ad16a236e7b1ce69f00d7ddfb5d0a6")},
                 { 74000, uint256S("0x0000000000573993a3c9e41ce34471c079dcf5f52a0e824a81e7f953b8661a20")},
@@ -226,13 +222,12 @@ public:
         };
 
         chainTxData = ChainTxData{
-            // Data as of block 000000000000000000d97e53664d17967bd4ee50b23abb92e54a34eb222d15ae (height 478913).
-            1501801925, // * UNIX timestamp of last known number of transactions
-            243756039,  // * total number of transactions between genesis and that timestamp
-                        //   (the tx=... number in the SetBestChain debug.log lines)
-            3.1         // * estimated number of transactions per second after that timestamp
+            // Data from rpc: getchaintxstats 4096 0000000000000000002e63058c023a9a1de233554f28c7b21380b6c9003f36a8
+            /* nTime    */ 1532884444,
+            /* nTxCount */ 331282217,
+            /* dTxRate  */ 2.4
         };
-
+        
         vApprovedPubkeys = {
             { "02e6db859bd48db0f22e3e4c28039b719990dc68"}
         };
@@ -247,25 +242,21 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210000;
-        consensus.BIP34Height = 227931;
-        consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
-        consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
-        consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
+        consensus.BIP34Height = -1;
+        consensus.BIP34Hash = uint256();
+        consensus.BIP65Height = -1;
+        consensus.BIP66Height = -1;
         consensus.BTHHeight = 1;
         consensus.BTHZawyLWMAHeight = -1; // Activated on testnet
         consensus.BTHEquihashForkHeight = -1;
 
         consensus.BTHApprovalWindow = 3;
+        consensus.BTHDifficultyReductionWindow = 1000;
         consensus.BTHApprovalEnforceWhitelist = true;
 
-        consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-
-        consensus.BTHTxFeeAlloc = 2000000 * COIN;
-        consensus.BTHEthereumSupplyAlloc= 3345135 * COIN;
-        consensus.BTHProjectAllocation = 1600000 * COIN;
 
         consensus.nDigishieldAveragingWindow = 30;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nDigishieldAveragingWindow);
@@ -306,11 +297,22 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x00");
 
-        pchMessageStart[0] = 0xe2;
+        // Allocations
+        consensus.BTHTxFeeAlloc = 2000000 * COIN;
+        consensus.BTHEthereumSupplyAlloc= 2730450 * COIN;
+        consensus.BTHProjectAllocation = 1600000 * COIN;
+
+        /**
+         * The message start string is designed to be unlikely to occur in normal data.
+         * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
+         * a large 32-bit integer with any alignment.
+         */
+        pchMessageStart[0] = 0xe4;
         pchMessageStart[1] = 0x48;
-        pchMessageStart[2] = 0x6e;
+        pchMessageStart[2] = 0x6a;
         pchMessageStart[3] = 0x45;
         nDefaultPort = 19553;
+
         nPruneAfterHeight = 1000;
         const size_t N = 200, K = 9;
         const size_t N2 = 144, K2 = 5;
@@ -325,7 +327,6 @@ public:
         consensus.hashGenesisBlock = genesis.GetHash(consensus);
         assert(consensus.hashGenesisBlock == uint256S("0x00000000e0781ebe24b91eedc293adfea2f557b53ec379e78959de3853e6f9f6"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
-
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
@@ -345,6 +346,7 @@ public:
         fDefaultConsistencyChecks = false;
         fRequireStandard = false;
         fMineBlocksOnDemand = false;
+
 
         checkpointData = (CCheckpointData) {
             {
@@ -381,16 +383,12 @@ public:
         consensus.BTHEquihashForkHeight = 2001;
 
         consensus.BTHApprovalWindow = 3;
+        consensus.BTHDifficultyReductionWindow = 1000;
         consensus.BTHApprovalEnforceWhitelist = false;
 
-        consensus.BTHDifficultyReductionWindow = 1000;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-
-        consensus.BTHTxFeeAlloc = 2000000 * COIN;
-        consensus.BTHEthereumSupplyAlloc= 3345135 * COIN;
-        consensus.BTHProjectAllocation = 1600000 * COIN;
 
         consensus.nDigishieldAveragingWindow = 30;
         consensus.nDigishieldMaxAdjustDown = 32;
@@ -426,12 +424,22 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x00");
 
+        // Allocations
+        consensus.BTHTxFeeAlloc = 2000000 * COIN;
+        consensus.BTHEthereumSupplyAlloc= 2730450 * COIN;
+        consensus.BTHProjectAllocation = 1600000 * COIN;
+
+        /**
+         * The message start string is designed to be unlikely to occur in normal data.
+         * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
+         * a large 32-bit integer with any alignment.
+         */
         pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xbf;
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
-
         nDefaultPort = 20553;
+
         nPruneAfterHeight = 1000;
         const size_t N = 48, K = 5;
         const size_t N2 = 96, K2 = 5;
@@ -464,10 +472,6 @@ public:
             0,
             0,
             0
-        };
-
-        vApprovedPubkeys = {
-            { "02e6db859bd48db0f22e3e4c28039b719990dc68"}
         };
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
@@ -525,7 +529,6 @@ void UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime,
     globalChainParams->UpdateVersionBitsParameters(d, nStartTime, nTimeout);
 }
 
-
 static CScript CltvSigScript(const std::vector<std::string>& pubkeys, uint32_t lock_time) {
     CScript redeem_script;
     redeem_script << OP_DUP << OP_HASH160;
@@ -546,22 +549,19 @@ static CScript MltvSigScript(const std::vector<std::string>& pubkeys, uint32_t l
     return redeem_script;
 }
 
-unsigned int CChainParams::EquihashSolutionWidth(int height) const {
+unsigned int CChainParams::EquihashSolutionWidth(int height) const
+{
     return EhSolutionWidth(EquihashN(height), EquihashK(height));
 }
 
-bool CChainParams::IsPremineAddressScript(const CScript& scriptPubKey, uint32_t height) const {
-    return false;
-}
-
 bool CChainParams::IsApprovedAddressScript(const CScript& scriptPubKey, uint32_t height) const {
-    assert((uint32_t)consensus.BTHHeight <= height &&
-           height < (uint32_t)(consensus.BTHHeight + consensus.BTHApprovalWindow));
-    int block = height - consensus.BTHHeight;
-    const std::vector<std::string> pubkeys = vApprovedPubkeys[0];
-    CScript redeem_script;
-    redeem_script = MltvSigScript(pubkeys, 0);
-    LogPrintf("redeem_script=%s\n", HexStr(redeem_script));
-    LogPrintf("scriptPubKey=%s\n", HexStr(scriptPubKey));
-    return scriptPubKey == redeem_script;
+  assert((uint32_t)consensus.BTHHeight <= height &&
+         height < (uint32_t)(consensus.BTHHeight + consensus.BTHApprovalWindow));
+  int block = height - consensus.BTHHeight;
+  const std::vector<std::string> pubkeys = vApprovedPubkeys[0];
+  CScript redeem_script;
+  redeem_script = MltvSigScript(pubkeys, 0);
+  LogPrintf("redeem_script=%s\n", HexStr(redeem_script));
+  LogPrintf("scriptPubKey=%s\n", HexStr(scriptPubKey));
+  return scriptPubKey == redeem_script;
 }

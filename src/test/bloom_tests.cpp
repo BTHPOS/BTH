@@ -22,7 +22,7 @@
 
 BOOST_FIXTURE_TEST_SUITE(bloom_tests, BasicTestingSetup)
 
-// TODO(h4x3rotab): Adopt new block format rather than the SERIALIZE_BLOCK_LEGACY hack.
+// TODO(Dondrey): Adopt new block format rather than the SERIALIZE_BLOCK_LEGACY hack.
 
 BOOST_AUTO_TEST_CASE(bloom_create_insert_serialize)
 {

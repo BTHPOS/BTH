@@ -240,11 +240,11 @@ UniValue stop(const JSONRPCRequest& jsonRequest)
     if (jsonRequest.fHelp || jsonRequest.params.size() > 1)
         throw std::runtime_error(
             "stop\n"
-            "\nStop bithereum server.");
+            "\nStop Bithereum server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "bithereum server stopping";
+    return "Bithereum server stopping";
 }
 
 UniValue uptime(const JSONRPCRequest& jsonRequest)

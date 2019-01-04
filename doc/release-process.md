@@ -28,15 +28,15 @@ Before every major release:
 
 ### First time / New builders
 
-If you're using the automated script (found in [contrib/gitian-build.sh](/contrib/gitian-build.sh)), then at this point you should run it with the "--setup" command (example: `./BETH/contrib/gitian-build.sh --setup "signer" 0.15.0'). Otherwise ignore this.
+If you're using the automated script (found in [contrib/gitian-build.sh](/contrib/gitian-build.sh)), then at this point you should run it with the "--setup" command (example: `./BTHPOS/contrib/gitian-build.sh --setup "signer" 0.15.0'). Otherwise ignore this.
 
 Check out the source code in the following directory hierarchy.
 
     cd /path/to/your/toplevel/build
-    git clone https://github.com/BETH/gitian.sigs.git
-    git clone https://github.com/BETH/bithereum-detached-sigs.git
+    git clone https://github.com/BTHPOS/gitian.sigs.git
+    git clone https://github.com/BTHPOS/bithereum-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
-    git clone https://github.com/BETH/BETH.git
+    git clone https://github.com/BTHPOS/BTH.git
 
 ### Bitcoin maintainers/release engineers, suggestion for writing release notes
 
@@ -57,11 +57,11 @@ Tag version (or release candidate) in git
 
 ### Setup and perform Gitian builds
 
-If you're using the automated script (found in [contrib/gitian-build.sh](/contrib/gitian-build.sh)), then at this point you should run it with the "--build" command (example: `./BETH/contrib/gitian-build.sh -b "signer" 0.15.0'). Otherwise ignore this.
+If you're using the automated script (found in [contrib/gitian-build.sh](/contrib/gitian-build.sh)), then at this point you should run it with the "--build" command (example: `./BTHPOS/contrib/gitian-build.sh -b "signer" 0.15.0'). Otherwise ignore this.
 
 Setup Gitian descriptors:
 
-    pushd ./BETH
+    pushd ./BTHPOS
     export SIGNER=(your Gitian key, ie bluematt, sipa, etc)
     export VERSION=(new version, e.g. 0.8.0)
     git fetch
@@ -95,7 +95,7 @@ Create the OS X SDK tarball, see the [OS X readme](README_osx.md) for details, a
 By default, Gitian will fetch source files as needed. To cache them ahead of time:
 
     pushd ./gitian-builder
-    make -C ../BETH/depends download SOURCES_PATH=`pwd`/cache/common
+    make -C ../BTHPOS/depends download SOURCES_PATH=`pwd`/cache/common
     popd
 
 Only missing files will be fetched, so this is safe to re-run for each build.
@@ -103,7 +103,7 @@ Only missing files will be fetched, so this is safe to re-run for each build.
 NOTE: Offline builds must use the --url flag to ensure Gitian fetches only from local URLs. For example:
 
     pushd ./gitian-builder
-    ./bin/gbuild --url BETH=/path/to/BETH,signature=/path/to/sigs {rest of arguments}
+    ./bin/gbuild --url BTHPOS=/path/to/BTHPOS,signature=/path/to/sigs {rest of arguments}
     popd
 
 The gbuild invocations below <b>DO NOT DO THIS</b> by default.
@@ -111,42 +111,42 @@ The gbuild invocations below <b>DO NOT DO THIS</b> by default.
 ### Build and sign Bithereum for Linux, Windows, and OS X:
 
     pushd ./gitian-builder
-    ./bin/gbuild --num-make 2 --memory 3000 --commit BETH=v${VERSION} ../BETH/contrib/gitian-descriptors/gitian-linux.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-linux.yml
-    mv build/out/bithereum-*.tar.gz build/out/src/bithereum-*.tar.gz ../
+    ./bin/gbuild --num-make 2 --memory 3000 --commit BTHPOS=v${VERSION} ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
+    mv build/out/bitcoin-gold-*.tar.gz build/out/src/bitcoin-gold-*.tar.gz ../
 
-    ./bin/gbuild --num-make 2 --memory 3000 --commit BETH=v${VERSION} ../BETH/contrib/gitian-descriptors/gitian-win.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-win.yml
-    mv build/out/bithereum-*-win-unsigned.tar.gz inputs/bithereum-win-unsigned.tar.gz
-    mv build/out/bithereum-*.zip build/out/bithereum-*.exe ../
+    ./bin/gbuild --num-make 2 --memory 3000 --commit BTHPOS=v${VERSION} ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
+    mv build/out/bitcoin-gold-*-win-unsigned.tar.gz inputs/bitcoin-gold-win-unsigned.tar.gz
+    mv build/out/bitcoin-gold-*.zip build/out/bitcoin-gold-*.exe ../
 
-    ./bin/gbuild --num-make 2 --memory 3000 --commit BETH=v${VERSION} ../BETH/contrib/gitian-descriptors/gitian-osx.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-osx.yml
-    mv build/out/bithereum-*-osx-unsigned.tar.gz inputs/bithereum-osx-unsigned.tar.gz
-    mv build/out/bithereum-*.tar.gz build/out/bithereum-*.dmg ../
+    ./bin/gbuild --num-make 2 --memory 3000 --commit BTHPOS=v${VERSION} ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
+    mv build/out/bitcoin-gold-*-osx-unsigned.tar.gz inputs/bitcoin-gold-osx-unsigned.tar.gz
+    mv build/out/bitcoin-gold-*.tar.gz build/out/bitcoin-gold-*.dmg ../
     popd
 
 Build output expected:
 
-  1. source tarball (`bithereum-${VERSION}.tar.gz`)
-  2. linux 32-bit and 64-bit dist tarballs (`bithereum-${VERSION}-linux[32|64].tar.gz`)
-  3. windows 32-bit and 64-bit unsigned installers and dist zips (`bithereum-${VERSION}-win[32|64]-setup-unsigned.exe`, `bithereum-${VERSION}-win[32|64].zip`)
-  4. OS X unsigned installer and dist tarball (`bithereum-${VERSION}-osx-unsigned.dmg`, `bithereum-${VERSION}-osx64.tar.gz`)
+  1. source tarball (`bitcoin-gold-${VERSION}.tar.gz`)
+  2. linux 32-bit and 64-bit dist tarballs (`bitcoin-gold-${VERSION}-linux[32|64].tar.gz`)
+  3. windows 32-bit and 64-bit unsigned installers and dist zips (`bitcoin-gold-${VERSION}-win[32|64]-setup-unsigned.exe`, `bitcoin-gold-${VERSION}-win[32|64].zip`)
+  4. OS X unsigned installer and dist tarball (`bitcoin-gold-${VERSION}-osx-unsigned.dmg`, `bitcoin-gold-${VERSION}-osx64.tar.gz`)
   5. Gitian signatures (in `gitian.sigs/${VERSION}-<linux|{win,osx}-unsigned>/(your Gitian key)/`)
 
 ### Verify other gitian builders signatures to your own. (Optional)
 
 Add other gitian builders keys to your gpg keyring, and/or refresh keys.
 
-    gpg --import BETH/contrib/gitian-keys/*.pgp
+    gpg --import BTHPOS/contrib/gitian-keys/*.pgp
     gpg --refresh-keys
 
 Verify the signatures
 
     pushd ./gitian-builder
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../BETH/contrib/gitian-descriptors/gitian-linux.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../BETH/contrib/gitian-descriptors/gitian-win.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../BETH/contrib/gitian-descriptors/gitian-osx.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-linux ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-unsigned ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-unsigned ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
     popd
 
 ### Next steps:
@@ -167,15 +167,15 @@ Codesigner only: Create Windows/OS X detached signatures:
 
 Codesigner only: Sign the osx binary:
 
-    transfer bithereum-osx-unsigned.tar.gz to osx for signing
-    tar xf bithereum-osx-unsigned.tar.gz
+    transfer bitcoin-gold-osx-unsigned.tar.gz to osx for signing
+    tar xf bitcoin-gold-osx-unsigned.tar.gz
     ./detached-sig-create.sh -s "Key ID"
     Enter the keychain password and authorize the signature
     Move signature-osx.tar.gz back to the gitian host
 
 Codesigner only: Sign the windows binaries:
 
-    tar xf bithereum-win-unsigned.tar.gz
+    tar xf bitcoin-gold-win-unsigned.tar.gz
     ./detached-sig-create.sh -key /path/to/codesign.key
     Enter the passphrase for the key when prompted
     signature-win.tar.gz will be created
@@ -195,25 +195,25 @@ Codesigner only: Commit the detached codesign payloads:
 Non-codesigners: wait for Windows/OS X detached signatures:
 
 - Once the Windows/OS X builds each have 3 matching signatures, they will be signed with their respective release keys.
-- Detached signatures will then be committed to the [bithereum-detached-sigs](https://github.com/BETH/bithereum-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
+- Detached signatures will then be committed to the [bithereum-detached-sigs](https://github.com/BTHPOS/bithereum-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
 
 Create (and optionally verify) the signed OS X binary:
 
     pushd ./gitian-builder
-    ./bin/gbuild -i --commit signature=v${VERSION} ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../BETH/contrib/gitian-descriptors/gitian-osx-signer.yml
-    mv build/out/bithereum-osx-signed.dmg ../bithereum-${VERSION}-osx.dmg
+    ./bin/gbuild -i --commit signature=v${VERSION} ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-osx-signed ../BTHPOS/contrib/gitian-descriptors/gitian-osx-signer.yml
+    mv build/out/bitcoin-gold-osx-signed.dmg ../bitcoin-gold-${VERSION}-osx.dmg
     popd
 
 Create (and optionally verify) the signed Windows binaries:
 
     pushd ./gitian-builder
-    ./bin/gbuild -i --commit signature=v${VERSION} ../BETH/contrib/gitian-descriptors/gitian-win-signer.yml
-    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../BETH/contrib/gitian-descriptors/gitian-win-signer.yml
-    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-signed ../BETH/contrib/gitian-descriptors/gitian-win-signer.yml
-    mv build/out/bithereum-*win64-setup.exe ../bithereum-${VERSION}-win64-setup.exe
-    mv build/out/bithereum-*win32-setup.exe ../bithereum-${VERSION}-win32-setup.exe
+    ./bin/gbuild -i --commit signature=v${VERSION} ../BTHPOS/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gsign --signer $SIGNER --release ${VERSION}-win-signed --destination ../gitian.sigs/ ../BTHPOS/contrib/gitian-descriptors/gitian-win-signer.yml
+    ./bin/gverify -v -d ../gitian.sigs/ -r ${VERSION}-win-signed ../BTHPOS/contrib/gitian-descriptors/gitian-win-signer.yml
+    mv build/out/bitcoin-gold-*win64-setup.exe ../bitcoin-gold-${VERSION}-win64-setup.exe
+    mv build/out/bitcoin-gold-*win32-setup.exe ../bitcoin-gold-${VERSION}-win32-setup.exe
     popd
 
 Commit your signature for the signed OS X/Windows binaries:
@@ -235,17 +235,17 @@ sha256sum * > SHA256SUMS
 
 The list of files should be:
 ```
-bithereum-${VERSION}-aarch64-linux-gnu.tar.gz
-bithereum-${VERSION}-arm-linux-gnueabihf.tar.gz
-bithereum-${VERSION}-i686-pc-linux-gnu.tar.gz
-bithereum-${VERSION}-x86_64-linux-gnu.tar.gz
-bithereum-${VERSION}-osx64.tar.gz
-bithereum-${VERSION}-osx.dmg
-bithereum-${VERSION}.tar.gz
-bithereum-${VERSION}-win32-setup.exe
-bithereum-${VERSION}-win32.zip
-bithereum-${VERSION}-win64-setup.exe
-bithereum-${VERSION}-win64.zip
+bitcoin-gold-${VERSION}-aarch64-linux-gnu.tar.gz
+bitcoin-gold-${VERSION}-arm-linux-gnueabihf.tar.gz
+bitcoin-gold-${VERSION}-i686-pc-linux-gnu.tar.gz
+bitcoin-gold-${VERSION}-x86_64-linux-gnu.tar.gz
+bitcoin-gold-${VERSION}-osx64.tar.gz
+bitcoin-gold-${VERSION}-osx.dmg
+bitcoin-gold-${VERSION}.tar.gz
+bitcoin-gold-${VERSION}-win32-setup.exe
+bitcoin-gold-${VERSION}-win32.zip
+bitcoin-gold-${VERSION}-win64-setup.exe
+bitcoin-gold-${VERSION}-win64.zip
 ```
 The `*-debug*` files generated by the gitian build contain debug symbols
 for troubleshooting by developers. It is assumed that anyone that is interested
@@ -269,10 +269,10 @@ Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spur
 
   - Alert to the slack channel
 
-  - Optionally twitter, reddit /r/bithereumHQ, ... but this will usually sort out itself
+  - Optionally twitter, reddit /r/BithereumHQ, ... but this will usually sort out itself
 
   - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
 
-  - Create a [new GitHub release](https://github.com/BETH/BETH/releases/new)
+  - Create a [new GitHub release](https://github.com/BTHPOS/BTH/releases/new)
 
   - Celebrate ¯\_(ツ)_/¯
