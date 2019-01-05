@@ -213,7 +213,7 @@ def getFrameworks(binaryPath, verbose):
 
     otoolLines = o_stdout.decode().split("\n")
     
-    # Libboost fix for when QT crashes when opening on a different mac
+    # Libboost fix for when QT crashes when opening on a different mac (Refer to https://github.com/litecoin-project/litecoin/issues/369)
     otoolLines.append(" /usr/local/opt/boost/lib/libboost_system-mt.dylib (compatibility version 0.0.0, current version 0.0.0)")
     
     # First line is the inspected binary
