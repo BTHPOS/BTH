@@ -351,7 +351,7 @@ then
 	    echo ""
 	    echo "Compiling ${VERSION} Mac OSX"
 	    echo ""
-	    ./bin/gbuild -j ${proc} -m ${mem} --commit BTHPOS=${COMMIT} --url BTH=${url} ../BTH/contrib/gitian-descriptors/gitian-osx.yml
+	    ./bin/gbuild -j ${proc} -m ${mem} --commit BTH=${COMMIT} --url BTH=${url} ../BTH/contrib/gitian-descriptors/gitian-osx.yml
 	    ./bin/gsign -p "${signProg}" --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../BTH/contrib/gitian-descriptors/gitian-osx.yml
 	    mv build/out/bithereum-*-osx-unsigned.tar.gz inputs/bithereum-osx-unsigned.tar.gz
 	    mv build/out/bithereum-*.tar.gz build/out/bithereum-*.dmg ../bitcoin-binaries/${VERSION}
