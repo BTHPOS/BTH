@@ -31,12 +31,12 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         // Original Bitcoin PoW.
         return BitcoinGetNextWorkRequired(pindexLast, pblock, params);
     }
-    else if (nHeight < params.BTHHeight + params.BTHDifficultyReductionWindow) {
+    else if (nHeight < params.BTHHeight + params.BTHPremineWindow) {
         // PoW limit for premine period.
         unsigned int nProofOfWorkLimit = UintToArith256(params.PowLimit(true)).GetCompact();
         return nProofOfWorkLimit;
     }
-    else if (nHeight < params.BTHHeight + params.BTHDifficultyReductionWindow + params.nDigishieldAveragingWindow) {
+    else if (nHeight < params.BTHHeight + params.BTHPremineWindow + params.nDigishieldAveragingWindow) {
         // Pow limit start for warm-up period.
         return UintToArith256(params.powLimitStart).GetCompact();
     }

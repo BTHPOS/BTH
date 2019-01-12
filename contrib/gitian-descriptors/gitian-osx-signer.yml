@@ -7,7 +7,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/BTHPOS/bithereum-detached-sigs.git"
+- "url": "https://github.com/BTCGPU/bithereum-detached-sigs.git"
   "dir": "signature"
 files:
 - "bithereum-osx-unsigned.tar.gz"

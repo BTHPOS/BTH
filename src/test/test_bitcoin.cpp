@@ -71,7 +71,7 @@ TestingSetup::TestingSetup(const std::string& chainName) : BasicTestingSetup(cha
         GetMainSignals().RegisterBackgroundSignalScheduler(scheduler);
 
         mempool.setSanityCheck(1.0);
-        pblocktree = new CBlockTreeDB(1 << 20, true);
+        pblocktree = new CBlockTreeDB(1 << 20, true, false, true, 1000, 2 << 20);
         pcoinsdbview = new CCoinsViewDB(1 << 23, true);
         pcoinsTip = new CCoinsViewCache(pcoinsdbview);
         if (!LoadGenesisBlock(chainparams)) {
@@ -137,7 +137,7 @@ TestChain100Setup::CreateAndProcessBlock(const std::vector<CMutableTransaction>&
     unsigned int extraNonce = 0;
     IncrementExtraNonce(&block, chainActive.Tip(), extraNonce);
 
-    // TODO(Dondrey): Generate Equihash solution if applicable.
+    // TODO(dondrey): Generate Equihash solution if applicable.
     while (!CheckProofOfWork(block.GetHash(), block.nBits, false, chainparams.GetConsensus())) {
         block.nNonce = ArithToUint256(UintToArith256(block.nNonce) + 1);
     }

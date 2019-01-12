@@ -87,7 +87,7 @@ UniValue GetNetworkHashPS(int lookup, int height) {
     return workDiff.getdouble() / timeDiff;
 }
 
-// TODO(Dondrey): Implement RPC `getlocalsolps`, and maybe `getnetworksolps` as a alias of `getnetworkhashps`.
+// TODO(dondrey): Implement RPC `getlocalsolps`, and maybe `getnetworksolps` as a alias of `getnetworkhashps`.
 
 UniValue getnetworkhashps(const JSONRPCRequest& request)
 {
@@ -185,13 +185,13 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
                 std::function<bool(std::vector<unsigned char>)> validBlock =
                         [&pblock](std::vector<unsigned char> soln) {
                     pblock->nSolution = soln;
-                    // TODO(Dondrey): Add metrics counter like Zcash? `solutionTargetChecks.increment();`
-                    // TODO(Dondrey): Maybe switch to EhBasicSolve and better deal with `nMaxTries`?
+                    // TODO(dondrey): Add metrics counter like Zcash? `solutionTargetChecks.increment();`
+                    // TODO(dondrey): Maybe switch to EhBasicSolve and better deal with `nMaxTries`?
                     return CheckProofOfWork(pblock->GetHash(), pblock->nBits, true, Params().GetConsensus());
                 };
                 bool found = EhBasicSolveUncancellable(n, k, curr_state, validBlock);
                 --nMaxTries;
-                // TODO(Dondrey): Add metrics counter like Zcash? `ehSolverRuns.increment();`
+                // TODO(dondrey): Add metrics counter like Zcash? `ehSolverRuns.increment();`
                 if (found) {
                     break;
                 }
@@ -484,7 +484,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
             if (!legacy_format && block.nHeight != (uint32_t)pindexPrev->nHeight + 1)
                 return "inconclusive-bad-height";
             CValidationState state;
-            TestBlockValidity(state, Params(), block, pindexPrev, false, true, false);
+            TestBlockValidity(state, Params(), block, pindexPrev, false, true);
             return BIP22ValidationResult(state);
         }
 
@@ -591,7 +591,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
 
         // Create new block
         CScript scriptDummy = CScript() << OP_TRUE;
-        pblocktemplate = BlockAssembler(Params()).CreateNewBlock(scriptDummy, fSupportsSegwit, false);
+        pblocktemplate = BlockAssembler(Params()).CreateNewBlock(scriptDummy, fSupportsSegwit);
         if (!pblocktemplate)
             throw JSONRPCError(RPC_OUT_OF_MEMORY, "Out of memory");
 
@@ -717,7 +717,7 @@ UniValue getblocktemplate(const JSONRPCRequest& request)
         // Note that this can probably also be removed entirely after the first BIP9 non-force deployment (ie, probably segwit) gets activated
         aMutable.push_back("version/force");
     }
-    // TODO(Dondrey): Return nHeight?
+    // TODO(dondrey): Return nHeight?
     result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
     result.push_back(Pair("transactions", transactions));
     result.push_back(Pair("coinbaseaux", aux));

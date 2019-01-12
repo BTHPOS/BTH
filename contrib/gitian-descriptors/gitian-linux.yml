@@ -17,7 +17,7 @@ packages:
 - "binutils-arm-linux-gnueabihf"
 - "g++-4.8-multilib"
 - "gcc-4.8-multilib"
-- "binutils-gold"
+- "binutils-bithereum"
 - "git-core"
 - "pkg-config"
 - "autoconf"
@@ -28,8 +28,8 @@ packages:
 - "ca-certificates"
 - "python"
 remotes:
-- "url": "https://github.com/BTHPOS/BTH.git"
-  "dir": "BTH"
+- "url": "https://github.com/BTCGPU/BTCGPU.git"
+  "dir": "BTCGPU"
 files: []
 script: |
 
@@ -113,7 +113,7 @@ script: |
   chmod +x ${WRAP_DIR}/${prog}
   done
 
-  cd BTH
+  cd BTCGPU
   BASEPREFIX=`pwd`/depends
   # Build dependencies for each host
   for i in $HOSTS; do

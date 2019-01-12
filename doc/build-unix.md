@@ -110,7 +110,7 @@ ZMQ dependencies (provides ZMQ API 4.x):
 
 I tested it with version 1.0.15 (from the `depends` directory) at it works.
 
-    $ cd BTHPOS
+    $ cd BTCGPU
     $ cd depends
     $ make
     $ cd ..

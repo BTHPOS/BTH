@@ -7,14 +7,14 @@
 #include "streams.h"
 #include "version.h"
 #include "primitives/block.h"
-#include "test/bth_cltv_multisig_data.h"
+#include "test/btg_cltv_multisig_data.h"
 #include "test/test_bitcoin.h"
 
 #include <stdint.h>
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(bth_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(btg_tests, BasicTestingSetup)
 
 // Taken from Zcash project to test the compability.
 class ZcashBlockHeader
@@ -47,25 +47,25 @@ public:
 
 BOOST_AUTO_TEST_CASE(zcash_header_compatible)
 {
-    CBlockHeader bth_header;
+    CBlockHeader btg_header;
     ZcashBlockHeader zcash_header;
     CDataStream ss(SER_DISK, PROTOCOL_VERSION);
 
     // `CBlockHeader.nHeight` should be placed in the first 4 bytes of `ZcashBlockHeader.hashReserved`.
-    bth_header.nHeight = 10000000;
+    btg_header.nHeight = 10000000;
     // `CBlockHeader.nReserved[5:7]` should be placed in the last 8 bytes of `ZcashBlockHeader.hashReserved`.
-    bth_header.nReserved[5] = 1234;
-    bth_header.nReserved[6] = 0;
-    bth_header.nSolution = std::vector<unsigned char> {
+    btg_header.nReserved[5] = 1234;
+    btg_header.nReserved[6] = 0;
+    btg_header.nSolution = std::vector<unsigned char> {
         0x11, 0x22, 0x33
     };
 
-    ss << bth_header;
+    ss << btg_header;
     ss >> zcash_header;
 
-    BOOST_CHECK_EQUAL(bth_header.nHeight, (uint32_t)zcash_header.hashReserved.GetUint64(0));
-    BOOST_CHECK_EQUAL(bth_header.nReserved[5], (uint32_t)zcash_header.hashReserved.GetUint64(3));
-    BOOST_CHECK_EQUAL(bth_header.nSolution[2], zcash_header.nSolution[2]);
+    BOOST_CHECK_EQUAL(btg_header.nHeight, (uint32_t)zcash_header.hashReserved.GetUint64(0));
+    BOOST_CHECK_EQUAL(btg_header.nReserved[5], (uint32_t)zcash_header.hashReserved.GetUint64(3));
+    BOOST_CHECK_EQUAL(btg_header.nSolution[2], zcash_header.nSolution[2]);
 }
 
 // For address conversion.
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(cltv_multisig_whitelist)
         std::vector<unsigned char> redeem_script_data = ParseHex(test_case.redeem_script);
         CScript redeem_script(redeem_script_data.begin(), redeem_script_data.end());
         CScript p2sh_script = GetScriptForDestination(CScriptID(redeem_script));
-        BOOST_CHECK(params.IsApprovedAddressScript(p2sh_script, test_case.height));
+        BOOST_CHECK(params.IsPremineAddressScript(p2sh_script, test_case.height));
     }
 }
 

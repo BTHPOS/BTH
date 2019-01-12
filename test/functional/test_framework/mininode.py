@@ -683,7 +683,7 @@ class CBlock(CBlockHeader):
         return self.get_merkle_root(hashes)
 
     def is_valid(self):
-        # TODO(Dondrey): Not implemented for Equihash.
+        # TODO(dondrey): Not implemented for Equihash.
         self.calc_sha256()
         target = uint256_from_compact(self.nBits)
         if self.sha256 > target:
@@ -696,7 +696,7 @@ class CBlock(CBlockHeader):
         return True
 
     def solve(self):
-        # TODO(Dondrey): Not implemented for Equihash.
+        # TODO(dondrey): Not implemented for Equihash.
         self.rehash()
         target = uint256_from_compact(self.nBits)
         while self.sha256 > target:

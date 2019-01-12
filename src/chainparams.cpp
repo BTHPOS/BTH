@@ -146,7 +146,7 @@ public:
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000047e6d2d75a348b3f02a2905"); // work for 555,554
-        
+
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x0000000000000000003b9ce759c2a087d52abc4266f8f4ebd6d768b89defa50a"); //477890
 
@@ -227,7 +227,7 @@ public:
             /* nTxCount */ 331282217,
             /* dTxRate  */ 2.4
         };
-        
+
         vApprovedPubkeys = {
             { "02e6db859bd48db0f22e3e4c28039b719990dc68"}
         };

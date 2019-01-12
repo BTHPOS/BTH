@@ -29,16 +29,16 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>Bithereum-Qt</string>
+  <string>BitcoinGold-Qt</string>
   
   <key>CFBundleName</key>
-  <string>Bithereum-Qt</string>
+  <string>BitcoinGold-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>org.bitcoingpu.Bithereum-Qt</string>
+  <string>org.bitcoingpu.BitcoinGold-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
