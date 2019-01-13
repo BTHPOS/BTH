@@ -3292,7 +3292,7 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
        block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
        nHeight >= consensusParams.BTHHeight &&
        nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
-       consensusParams.BTHApprovalEnforceWhitelist && checkApproved)
+       consensusParams.BTHApprovalEnforceWhitelist)
     {
         const CTxOut& output = block.vtx[0]->vout[0];
         bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
