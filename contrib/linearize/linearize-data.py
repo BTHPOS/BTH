@@ -72,8 +72,8 @@ def calc_hdr_hash(blk_hdr):
 
     return hash2_o
 
-def calc_hash_str(blk_hdr, btg_hash):
-    if not btg_hash:
+def calc_hash_str(blk_hdr, bth_hash):
+    if not bth_hash:
         blk_hdr = blk_hdr[0:68] + blk_hdr[100:112]
     hash = calc_hdr_hash(blk_hdr)
     hash = bufreverse(hash)
