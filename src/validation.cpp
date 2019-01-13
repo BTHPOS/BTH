@@ -3288,20 +3288,20 @@ static bool ContextualCheckBlock(const CBlock& block, CValidationState& state, c
         }
     }
 
-    if (block.nHeight >= consensusParams.BTHHeight &&
-       block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
-       nHeight >= consensusParams.BTHHeight &&
-       nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
-       consensusParams.BTHApprovalEnforceWhitelist)
-    {
-        const CTxOut& output = block.vtx[0]->vout[0];
-        bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
-        if (!valid) {
-            return state.DoS(
-                100, error("%s: not in approved whitelist", __func__),
-                REJECT_INVALID, "bad-approved-coinbase-scriptpubkey");
-        }
-    }
+//     if (block.nHeight >= consensusParams.BTHHeight &&
+//        block.nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow  &&
+//        nHeight >= consensusParams.BTHHeight &&
+//        nHeight < consensusParams.BTHHeight + consensusParams.BTHApprovalWindow &&
+//        consensusParams.BTHApprovalEnforceWhitelist)
+//     {
+//         const CTxOut& output = block.vtx[0]->vout[0];
+//         bool valid = Params().IsApprovedAddressScript(output.scriptPubKey, (uint32_t)nHeight);
+//         if (!valid) {
+//             return state.DoS(
+//                 100, error("%s: not in approved whitelist", __func__),
+//                 REJECT_INVALID, "bad-approved-coinbase-scriptpubkey");
+//         }
+//     }
 
 
     // Validation for witness commitments.
