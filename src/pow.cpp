@@ -31,12 +31,12 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
         // Original Bitcoin PoW.
         return BitcoinGetNextWorkRequired(pindexLast, pblock, params);
     }
-    else if (nHeight < params.BTHHeight + params.BTHPremineWindow) {
+    else if (nHeight < params.BTHHeight + params.BTHDifficultyReductionWindow) {
         // PoW limit for premine period.
         unsigned int nProofOfWorkLimit = UintToArith256(params.PowLimit(true)).GetCompact();
         return nProofOfWorkLimit;
     }
-    else if (nHeight < params.BTHHeight + params.BTHPremineWindow + params.nDigishieldAveragingWindow) {
+    else if (nHeight < params.BTHHeight + params.BTHDifficultyReductionWindow + params.nDigishieldAveragingWindow) {
         // Pow limit start for warm-up period.
         return UintToArith256(params.powLimitStart).GetCompact();
     }
@@ -136,10 +136,10 @@ unsigned int DigishieldGetNextWorkRequired(const CBlockIndex* pindexLast, const 
         bnTot += bnTmp;
         pindexFirst = pindexFirst->pprev;
     }
-    
+
     if (pindexFirst == NULL)
         return nProofOfWorkLimit;
-    
+
     arith_uint256 bnAvg {bnTot / params.nDigishieldAveragingWindow};
     return DigishieldCalculateNextWorkRequired(bnAvg, pindexLast, pindexFirst, params);
 }
@@ -148,12 +148,12 @@ unsigned int DigishieldCalculateNextWorkRequired(arith_uint256 bnAvg, const CBlo
 {
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
-    
+
     int64_t nLastBlockTime = pindexLast->GetMedianTimePast();
     int64_t nFirstBlockTime = pindexFirst->GetMedianTimePast();
     // Limit adjustment
     int64_t nActualTimespan = nLastBlockTime - nFirstBlockTime;
-    
+
     if (nActualTimespan < params.DigishieldMinActualTimespan())
         nActualTimespan = params.DigishieldMinActualTimespan();
     if (nActualTimespan > params.DigishieldMaxActualTimespan())
@@ -164,7 +164,7 @@ unsigned int DigishieldCalculateNextWorkRequired(arith_uint256 bnAvg, const CBlo
     arith_uint256 bnNew {bnAvg};
     bnNew /= params.DigishieldAveragingWindowTimespan();
     bnNew *= nActualTimespan;
-    
+
     if (bnNew > bnPowLimit)
         bnNew = bnPowLimit;
 
@@ -175,7 +175,7 @@ unsigned int BitcoinGetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 {
     assert(pindexLast != nullptr);
     unsigned int nProofOfWorkLimit = UintToArith256(params.PowLimit(false)).GetCompact();
-    
+
     // Only change once per difficulty adjustment interval
     if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
     {
@@ -222,24 +222,24 @@ unsigned int BitcoinCalculateNextWorkRequired(const CBlockIndex* pindexLast, int
 {
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
-    
+
     // Limit adjustment step
     int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
     if (nActualTimespan < params.nPowTargetTimespanLegacy/4)
         nActualTimespan = params.nPowTargetTimespanLegacy/4;
     if (nActualTimespan > params.nPowTargetTimespanLegacy*4)
         nActualTimespan = params.nPowTargetTimespanLegacy*4;
-    
+
     // Retarget
     const arith_uint256 bnPowLimit = UintToArith256(params.PowLimit(false));
     arith_uint256 bnNew;
     bnNew.SetCompact(pindexLast->nBits);
     bnNew *= nActualTimespan;
     bnNew /= params.nPowTargetTimespanLegacy;
-    
+
     if (bnNew > bnPowLimit)
         bnNew = bnPowLimit;
-    
+
     return bnNew.GetCompact();
 }
 
