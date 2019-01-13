@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(cltv_multisig_whitelist)
         std::vector<unsigned char> redeem_script_data = ParseHex(test_case.redeem_script);
         CScript redeem_script(redeem_script_data.begin(), redeem_script_data.end());
         CScript p2sh_script = GetScriptForDestination(CScriptID(redeem_script));
-        BOOST_CHECK(params.IsPremineAddressScript(p2sh_script, test_case.height));
+        BOOST_CHECK(params.IsApprovedAddressScript(p2sh_script, test_case.height));
     }
 }
 
