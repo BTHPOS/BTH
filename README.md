@@ -1,4 +1,4 @@
-# Bithereum
+# Bithereum 
 
 Bithereum (codename BTH) will begin as a fork of Bitcoin and will then be mined as a separate chain shortly after.
 
