@@ -1117,12 +1117,32 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
     int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
     // Force block reward to zero when right shift is undefined.
-    if (halvings >= 64)
+    if (halvings >= 65)
         return 0;
 
-    CAmount nSubsidy = 50 * COIN;
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
-    nSubsidy >>= halvings;
+    // Initial coin subsidy
+    CAmount nSubsidy = 0;
+
+    // Handle block subsidy according to block height.
+    // The first fork block will generate each of the allocations.
+    if (nHeight == consensusParams.BTHHeight)
+      nSubsidy = consensusParams.BTHTxFeeAlloc + consensusParams.BTHEthereumSupplyAlloc + consensusParams.BTHProjectAllocation;
+
+    // The following will look at block height before and after the fork height
+    else {
+        // Heights beyond the fork height will start at an
+        // increased offset from BTC
+        if (nHeight > consensusParams.BTHHeight)
+          nSubsidy = 100 * COIN;
+
+        // Otherwise, refer to BTC block reward for specified height
+        else
+          nSubsidy = 50 * COIN;
+
+        // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
+        nSubsidy >>= halvings;
+    }
+
     return nSubsidy;
 }
 
