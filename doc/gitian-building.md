@@ -398,7 +398,7 @@ and inputs.
 
 For example:
 ```bash
-URL=https://github.com/akx20000a/BTHPOS.git
+URL=https://github.com/BTHPOS/BTH.git
 COMMIT=d5522ed66a924a2d505fe45ed2487e741c6c0917
 ./bin/gbuild --commit BTHPOS=${COMMIT} --url BTHPOS=${URL} ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
 ./bin/gbuild --commit BTHPOS=${COMMIT} --url BTHPOS=${URL} ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
