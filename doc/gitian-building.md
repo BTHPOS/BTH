@@ -367,7 +367,7 @@ tail -f var/build.log
 
 Output from `gbuild` will look something like
 
-    Initialized empty Git repository in /home/debian/gitian-builder/inputs/BTHPOS/.git/
+    Initialized empty Git repository in /home/debian/gitian-builder/inputs/BTH/.git/
     remote: Counting objects: 57959, done.
     remote: Total 57959 (delta 0), reused 0 (delta 0), pack-reused 57958
     Receiving objects: 100% (57959/57959), 53.76 MiB | 484.00 KiB/s, done.
@@ -400,9 +400,9 @@ For example:
 ```bash
 URL=https://github.com/BTHPOS/BTH.git
 COMMIT=d5522ed66a924a2d505fe45ed2487e741c6c0917
-./bin/gbuild --commit BTHPOS=${COMMIT} --url BTHPOS=${URL} ../BTHPOS/contrib/gitian-descriptors/gitian-linux.yml
-./bin/gbuild --commit BTHPOS=${COMMIT} --url BTHPOS=${URL} ../BTHPOS/contrib/gitian-descriptors/gitian-win.yml
-./bin/gbuild --commit BTHPOS=${COMMIT} --url BTHPOS=${URL} ../BTHPOS/contrib/gitian-descriptors/gitian-osx.yml
+./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-linux.yml
+./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-win.yml
+./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-osx.yml
 ```
 
 Building fully offline
