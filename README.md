@@ -1,35 +1,40 @@
 # Bithereum
 
-Bithereum (codename BTH) will begin as a fork of Bitcoin and will then be mined as a separate chain shortly after.
+[![Build Status](https://travis-ci.org/BTHPOS/BTH.svg?branch=master)](https://travis-ci.org/BTHPOS/BTH)
 
-The primary goal is to maintain a variant of Bitcoin that is centered around Proof of Stake and Ethereum's technological roadmap ultimately democratizing mining efforts, improving scalability, and increasing network consensus.
+Bithereum (codename BTH) began as a fork of Bitcoin after block height 491406 on Tue, 24 Oct 2017 01:17:35 GMT and began being mined as a separate chain at block height 491407 on Sun, 12 Nov 2017 13:34:01 GMT.
 
-BTC which has long been touted as the most superior P2P currency, has seen it’s networks slow down significantly in lieu of the major price upswing seen this year. These points of inefficiency have not been addressed by the core development team and have resulted in a further divide in the community. The three major issues prevalent with BTC are as follows:
+The primary goal is to maintain a variant of Bitcoin that is more decentralized by using an ASIC-resistant Proof of Work algorithm, removing barriers to entry for new miners around the world and reducing the concentration of power in the hands of massive-scale mining operations.
 
-- Limited scalability- increased traffic and volume has hindered speed, ease, and cheapness in transacting across borders
-- Community Schism- Deep ideological divide within BTC community
-- Mining Cartel- Monopolization through mining pools; the 4 largest mining pools control roughly 61% of the mining hashpower
+Bithereum preserves and implements Bitcoin features such as SegWit, which enables advanced scaling technologies like Lightning Network. Significant differences at launch time included:
 
-Bithereum believes in the importance of both on-chain and off-chain scaling solutions, as well as Proof of Stake being a consensus mechanism that will make the blockchain more efficient while increasing network security.
+- ASIC-resistant GPU-minable PoW algorithm (Equihash)
+- Per-block difficulty adjustment algorithm
+- Replay protection (SIGHASH_FORK_ID)
+- Unique wallet addresses (prefixes of G and A)
 
-Bithereum preserves and implements Bitcoin features such as SegWit but also focuses on implementing features of Ethereum, namely PoS. Significant features of Bithereum include:
+Although BTH was bootstrapped on 12 Nov to create an entirely new network, it contains the entire Bitcoin blockchain until block 491406. As a result, Bithereum became a full fork with all Bitcoin transaction history since 2009. Any Bitcoin wallet address which held Bitcoin in BTC block 491406 before the fork held an equal number of Bithereum in BTH block 491407 after the fork.
 
-    - Initially ASIC-resistant, GPU-minable PoW algorithm (Equihash <144,5>)
-    - To be later changed to Casper-like Proof of Stake FFG Consensus model via OpCodes. Additional details about our PoS model are in this blog: https://medium.com/bithereum-network/bithereums-proof-of-stake-concept-b06899fa4950
-    - Increased Blocksize (4MB)
-    - SegWit
-    - Replay protection (SIGHASH_FORK_ID)
-    - Lightning Network upcoming
-    - Full Node Incentivization
+## Releases
 
-Though Proof of Stake will take some time to implement, even in the case of Ethereum, it is on the horizon of completion. Bithereum, however, will begin mining prior to its completion through the Proof of Work algorithm known as Equihash. Once PoS is complete, miners will be able to stake their holdings for dividend-like returns. Bithereum will be leveraging existing OpCodes as well as introducing several new OpCodes to create its PoS model. Furthermore, everyone who runs a Bithereum full node will be rewarded with a portion of Bithereum’s official mining pool’s fees, addressing the misalignment of incentives for full nodes present in most other chains.
+This is the staging tree of Bithereum. For release version, please switch to [0.15 branch](https://github.com/BTHPOS/BTH/tree/0.15) or [release page](https://github.com/BTHPOS/BTH/releases).
 
-Although BTH was bootstrapped to create an entirely new network, it contains the entire Bitcoin blockchain until the block from which it will be forked. As a result, Bithereum will become a full fork with all of Bitcoin's transaction history since 2009. Any Bitcoin wallet address which held Bitcoin in the BTC block before the fork held an equal number of Bithereum in the first block after the fork.
+To compile from source, please check the build documentations under [doc](https://github.com/BTHPOS/BTH/tree/master/doc).
 
-## WARNING
+## Responsible Disclosure
 
-This is the staging tree of Bithereum. If you don’t understand what you are doing, please don’t compile and run your own client from the staging tree.
+At the Bithereum, we consider the security of our systems a top priority. But no matter how much effort we put into system security, there can still be vulnerabilities present.
+
+If you discover a vulnerability, we would like to know about it so we can take steps to address it as quickly as possible. We would like to ask you to help us better protect our users and our systems.
+
+Please check our [Responsible Disclosure](https://bithereum.network/responsible-disclosure/) page for more details.
 
 ## Links
 
-* Website: https://bithereum.network/
+* Website: https://bithereum.network
+* Tech Spec: https://github.com/BTHPOS/BTH/wiki/Technical-Spec
+* Twitter: https://twitter.com/bithereum
+* Facebook: https://www.facebook.com/bithereumofficial/
+* Forum: https://forum.bithereum.network
+* Discord: [invitation](https://discord.gg/HmVUU6S)
+* Telegram (Global): https://t.me/BithereumNetworkHQ

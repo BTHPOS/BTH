@@ -310,7 +310,7 @@ cd ..
 
 **Note**: When sudo asks for a password, enter the password for the user *debian* not for *root*.
 
-Clone the git repositories for BTHPOS and Gitian.
+Clone the git repositories for BTH and Gitian.
 
 ```bash
 git clone https://github.com/devrandom/gitian-builder.git
@@ -399,7 +399,7 @@ and inputs.
 For example:
 ```bash
 URL=https://github.com/BTHPOS/BTH.git
-COMMIT=1301ee475ea227c68bfe4f5289442a2e5ee5df25
+COMMIT=ee7b46b775f3bc5f9ad294814877a516e481cc0c
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-linux.yml
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-win.yml
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-osx.yml
@@ -450,10 +450,10 @@ Then when building, override the remote URLs that gbuild would otherwise pull fr
 cd /some/root/path/
 git clone https://github.com/BTHPOS/bithereum-detached-sigs.git
 
-BTCPATH=/some/root/path/BTHPOS
+BTCPATH=/some/root/path/BTH
 SIGPATH=/some/root/path/bithereum-detached-sigs
 
-./bin/gbuild --url BTHPOS=${BTCPATH},signature=${SIGPATH} ../BTHPOS/contrib/gitian-descriptors/gitian-win-signer.yml
+./bin/gbuild --url BTH=${BTCPATH},signature=${SIGPATH} ../BTH/contrib/gitian-descriptors/gitian-win-signer.yml
 ```
 
 Signing externally
@@ -468,9 +468,9 @@ When you execute `gsign` you will get an error from GPG, which can be ignored. C
 in `gitian.sigs` to your signing machine and do
 
 ```bash
-    gpg --detach-sign ${VERSION}-linux/${SIGNER}/bithereum-linux-build.assert
-    gpg --detach-sign ${VERSION}-win/${SIGNER}/bithereum-win-build.assert
-    gpg --detach-sign ${VERSION}-osx-unsigned/${SIGNER}/bithereum-osx-build.assert
+    gpg --detach-sign ${VERSION}-linux/${SIGNER}/bithereum-build-linux-build.assert
+    gpg --detach-sign ${VERSION}-win/${SIGNER}/bithereum-build-win-build.assert
+    gpg --detach-sign ${VERSION}-osx-unsigned/${SIGNER}/bithereum-build-osx-build.assert
 ```
 
 This will create the `.sig` files that can be committed together with the `.assert` files to assert your
@@ -480,5 +480,5 @@ Uploading signatures
 ---------------------
 
 After building and signing you can push your signatures (both the `.assert` and `.assert.sig` files) to the
-[BTHPOS/gitian.sigs](https://github.com/BTHPOS/gitian.sigs/) repository, or if that's not possible create a pull
+[BTH/gitian.sigs](https://github.com/BTHPOS/gitian.sigs/) repository, or if that's not possible create a pull
 request.

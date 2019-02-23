@@ -155,7 +155,7 @@ class FrameworkInfo(object):
 class ApplicationBundleInfo(object):
     def __init__(self, path):
         self.path = path
-        appName = "Bithereum-Qt"
+        appName = "BithereumNetwork-Qt"
         self.binaryPath = os.path.join(path, "Contents", "MacOS", appName)
         if not os.path.exists(self.binaryPath):
             raise RuntimeError("Could not find bundle binary for " + path)
@@ -212,13 +212,7 @@ def getFrameworks(binaryPath, verbose):
             raise RuntimeError("otool failed with return code %d" % otool.returncode)
 
     otoolLines = o_stdout.decode().split("\n")
-    
-    # Libboost fix for when QT crashes when opening on a different mac (Refer to https://github.com/litecoin-project/litecoin/issues/369)
-    otoolLines.append(" /usr/local/opt/boost/lib/libboost_system-mt.dylib (compatibility version 0.0.0, current version 0.0.0)")
-    
-    # First line is the inspected binary
-    otoolLines.pop(0)
-    
+    otoolLines.pop(0) # First line is the inspected binary
     if ".framework" in binaryPath or binaryPath.endswith(".dylib"):
         otoolLines.pop(0) # Frameworks and dylibs list themselves as a dependency.
     
@@ -609,7 +603,7 @@ else:
 
 # ------------------------------------------------
 
-target = os.path.join("dist", "Bithereum-Qt.app")
+target = os.path.join("dist", "BithereumNetwork-Qt.app")
 
 if verbose >= 2:
     print("+ Copying source bundle +")

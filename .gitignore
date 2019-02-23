@@ -2,8 +2,8 @@
 
 *.exe
 src/bitcoin
-src/bitcoind
-src/bitcoin-cli
+src/bethd
+src/beth-cli
 src/bitcoin-tx
 src/test/test_bitcoin
 src/test/test_bitcoin_fuzzy
@@ -44,12 +44,6 @@ src/qt/forms/ui_*.h
 
 src/qt/test/moc*.cpp
 
-src/qt/bitcoin-qt.config
-src/qt/bitcoin-qt.creator
-src/qt/bitcoin-qt.creator.user
-src/qt/bitcoin-qt.files
-src/qt/bitcoin-qt.includes
-
 .deps
 .dirstamp
 .libs
@@ -61,7 +55,7 @@ src/qt/bitcoin-qt.includes
 *.pyc
 *.o
 *.o-*
-#*.patch
+*.patch
 *.a
 *.pb.cc
 *.pb.h
@@ -82,7 +76,6 @@ src/qt/bitcoin-qt.includes
 Makefile
 bitcoin-qt
 Bitcoin-Qt.app
-background.tiff*
 
 # Unit-tests
 Makefile.test
@@ -94,6 +87,9 @@ qrc_*.cpp
 # Mac specific
 .DS_Store
 build
+
+# VSCode
+.vscode/
 
 #lcov
 *.gcno
