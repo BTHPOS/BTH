@@ -314,7 +314,7 @@ Clone the git repositories for BTH and Gitian.
 
 ```bash
 git clone https://github.com/devrandom/gitian-builder.git
-git clone https://github.com/BTHPOS/BTH.git
+git clone https://github.com/dondreytaylor/BTH.git
 git clone https://github.com/BTHPOS/gitian.sigs.git
 ```
 
@@ -398,7 +398,7 @@ and inputs.
 
 For example:
 ```bash
-URL=https://github.com/BTHPOS/BTH.git
+URL=https://github.com/dondreytaylor/BTH.git
 COMMIT=ee7b46b775f3bc5f9ad294814877a516e481cc0c
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-linux.yml
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-win.yml

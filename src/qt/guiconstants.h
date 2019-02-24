@@ -49,7 +49,7 @@ static const int MAX_URI_LENGTH = 255;
 #define SPINNER_FRAMES 36
 
 #define QAPP_ORG_NAME "BithereumNetwork"
-#define QAPP_ORG_DOMAIN "bithereum.network"
+#define QAPP_ORG_DOMAIN "bithereum.org"
 #define QAPP_APP_NAME_DEFAULT "BithereumNetwork-Qt"
 #define QAPP_APP_NAME_TESTNET "BithereumNetwork-Qt-testnet"
 

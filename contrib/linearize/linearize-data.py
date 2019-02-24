@@ -21,7 +21,7 @@ from binascii import hexlify, unhexlify
 
 settings = {}
 
-""" Block header format of Bithereum.
+""" Block header format of Bicoin Gold.
 4+32+32+32+4+4+32 = 140
   0   4           self.nVersion = struct.unpack("<i", f.read(4))[0]
   4  32           self.hashPrevBlock = deser_uint256(f)

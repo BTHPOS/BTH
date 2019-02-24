@@ -1,6 +1,6 @@
 # Bithereum
 
-[![Build Status](https://travis-ci.org/BTHPOS/BTH.svg?branch=master)](https://travis-ci.org/BTHPOS/BTH)
+[![Build Status](https://travis-ci.org/dondreytaylor/BTH.svg?branch=master)](https://travis-ci.org/dondreytaylor/BTH)
 
 Bithereum (codename BTH) began as a fork of Bitcoin after block height 491406 on Tue, 24 Oct 2017 01:17:35 GMT and began being mined as a separate chain at block height 491407 on Sun, 12 Nov 2017 13:34:01 GMT.
 
@@ -17,9 +17,9 @@ Although BTH was bootstrapped on 12 Nov to create an entirely new network, it co
 
 ## Releases
 
-This is the staging tree of Bithereum. For release version, please switch to [0.15 branch](https://github.com/BTHPOS/BTH/tree/0.15) or [release page](https://github.com/BTHPOS/BTH/releases).
+This is the staging tree of Bithereum. For release version, please switch to [0.15 branch](https://github.com/dondreytaylor/BTH/tree/0.15) or [release page](https://github.com/dondreytaylor/BTH/releases).
 
-To compile from source, please check the build documentations under [doc](https://github.com/BTHPOS/BTH/tree/master/doc).
+To compile from source, please check the build documentations under [doc](https://github.com/dondreytaylor/BTH/tree/master/doc).
 
 ## Responsible Disclosure
 
@@ -27,14 +27,14 @@ At the Bithereum, we consider the security of our systems a top priority. But no
 
 If you discover a vulnerability, we would like to know about it so we can take steps to address it as quickly as possible. We would like to ask you to help us better protect our users and our systems.
 
-Please check our [Responsible Disclosure](https://bithereum.network/responsible-disclosure/) page for more details.
+Please check our [Responsible Disclosure](https://bithereum.org/responsible-disclosure/) page for more details.
 
 ## Links
 
-* Website: https://bithereum.network
-* Tech Spec: https://github.com/BTHPOS/BTH/wiki/Technical-Spec
+* Website: https://bithereum.org
+* Tech Spec: https://github.com/dondreytaylor/BTH/wiki/Technical-Spec
 * Twitter: https://twitter.com/bithereum
 * Facebook: https://www.facebook.com/bithereumofficial/
-* Forum: https://forum.bithereum.network
+* Forum: https://forum.bithereum.org
 * Discord: [invitation](https://discord.gg/HmVUU6S)
 * Telegram (Global): https://t.me/BithereumNetworkHQ

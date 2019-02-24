@@ -38,7 +38,7 @@
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>org.bithereumnetwork.BithereumNetwork-Qt</string>
+  <string>org.bitcoingpu.BithereumNetwork-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
