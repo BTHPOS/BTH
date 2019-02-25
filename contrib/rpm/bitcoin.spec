@@ -24,7 +24,7 @@ URL:		https://bitcoin.org/
 Source0:	https://bitcoin.org/bin/bitcoin-core-%{version}/bitcoin-%{version}.tar.gz
 Source1:	http://download.oracle.com/berkeley-db/db-%{bdbv}.NC.tar.gz
 
-Source10:	https://raw.githubusercontent.com/dondreytaylor/BTH/master/contrib/debian/examples/bithereum.conf
+Source10:	https://raw.githubusercontent.com/BTHPOS/BTH/master/contrib/debian/examples/bithereum.conf
 
 #man pages
 Source20:	https://raw.githubusercontent.com/bitcoin/bitcoin/v%{version}/doc/man/bitcoind.1

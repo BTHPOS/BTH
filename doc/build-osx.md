@@ -29,7 +29,7 @@ Build Bithereum
 
 1. Clone the Bithereum source code and cd into `BTH`
 
-        git clone https://github.com/dondreytaylor/BTH
+        git clone https://github.com/BTHPOS/BTH
         cd BTH
 
 2.  Build BTH:

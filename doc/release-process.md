@@ -36,7 +36,7 @@ Check out the source code in the following directory hierarchy.
     git clone https://github.com/BTHPOS/gitian.sigs.git
     git clone https://github.com/BTHPOS/bithereum-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
-    git clone https://github.com/dondreytaylor/BTH.git
+    git clone https://github.com/BTHPOS/BTH.git
 
 ### Bitcoin maintainers/release engineers, suggestion for writing release notes
 
@@ -265,7 +265,7 @@ Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spur
 
 - Announce the release:
 
-  - bithereum.org
+  - bithereum.network
 
   - Alert to the slack channel
 
@@ -273,6 +273,6 @@ Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spur
 
   - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
 
-  - Create a [new GitHub release](https://github.com/dondreytaylor/BTH/releases/new)
+  - Create a [new GitHub release](https://github.com/BTHPOS/BTH/releases/new)
 
   - Celebrate ¯\_(ツ)_/¯

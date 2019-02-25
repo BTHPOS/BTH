@@ -2,7 +2,7 @@
 
 This issue tracker is only for technical issues related to bithereum-build.
 
-For reporting security issues, please see the official [Bithereum website](https://bithereum.org/).
+For reporting security issues, please see the official [Bithereum website](https://bithereum.network/).
 
 ### Describe the issue
 

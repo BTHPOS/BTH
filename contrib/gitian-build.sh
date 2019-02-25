@@ -17,7 +17,7 @@ osx=true
 SIGNER=
 VERSION=
 commit=false
-url=https://github.com/dondreytaylor/BTH
+url=https://github.com/BTHPOS/BTH
 gsigsUrl=https://github.com/BTHPOS/gitian.sigs
 detachUrl=https://github.com/BTHPOS/bithereum-detached-sigs
 proc=2
@@ -41,7 +41,7 @@ version		Version number, commit, or branch to build. If building a commit or bra
 
 Options:
 -c|--commit	Indicate that the version argument is for a commit or branch
--u|--url	Specify the URL of the bithereum repository. Default is https://github.com/dondreytaylor/BTH
+-u|--url	Specify the URL of the bithereum repository. Default is https://github.com/BTHPOS/BTH
 -g|--gsigsUrl	Specify the URL of the gitian.sigs repository. Default is https://github.com/BTHPOS/gitian.sigs
 -d|--detachUrl	Specify the URL of the bithereum-detached-sigs repository. Default is https://github.com/BTHPOS/bithereum-detached-sigs
 -v|--verify 	Verify the Gitian build
