@@ -1,6 +1,6 @@
 # Bithereum
 
-[![Build Status](https://travis-ci.org/BTHPOS/BTH.svg?branch=master)](https://travis-ci.org/BTHPOS/BTH)
+[![Build Status](https://travis-ci.org/dondreytaylor/BTH.svg?branch=master)](https://travis-ci.org/dondreytaylor/BTH)
 
 Bithereum (codename BTH) began as a fork of Bitcoin after block height 491406 on Tue, 24 Oct 2017 01:17:35 GMT and began being mined as a separate chain at block height 491407 on Sun, 12 Nov 2017 13:34:01 GMT.
 
@@ -17,9 +17,9 @@ Although BTH was bootstrapped on 12 Nov to create an entirely new network, it co
 
 ## Releases
 
-This is the staging tree of Bithereum. For release version, please switch to [0.15 branch](https://github.com/BTHPOS/BTH/tree/0.15) or [release page](https://github.com/BTHPOS/BTH/releases).
+This is the staging tree of Bithereum. For release version, please switch to [0.15 branch](https://github.com/dondreytaylor/BTH/tree/0.15) or [release page](https://github.com/dondreytaylor/BTH/releases).
 
-To compile from source, please check the build documentations under [doc](https://github.com/BTHPOS/BTH/tree/master/doc).
+To compile from source, please check the build documentations under [doc](https://github.com/dondreytaylor/BTH/tree/master/doc).
 
 ## Responsible Disclosure
 
@@ -32,7 +32,7 @@ Please check our [Responsible Disclosure](https://bithereum.network/responsible-
 ## Links
 
 * Website: https://bithereum.network
-* Tech Spec: https://github.com/BTHPOS/BTH/wiki/Technical-Spec
+* Tech Spec: https://github.com/dondreytaylor/BTH/wiki/Technical-Spec
 * Twitter: https://twitter.com/bithereum
 * Facebook: https://www.facebook.com/bithereumofficial/
 * Forum: https://forum.bithereum.network

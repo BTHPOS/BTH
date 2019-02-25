@@ -521,7 +521,7 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/BTHPOS/BTH>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/dondreytaylor/BTH>";
     const std::string URL_WEBSITE = "<https://bithereum.network>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2009, COPYRIGHT_YEAR) + " ") + "\n" +
