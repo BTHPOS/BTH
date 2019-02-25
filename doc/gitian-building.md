@@ -389,6 +389,16 @@ Output from `gbuild` will look something like
     lxc-start: Connection refused - inotify event with no name (mask 32768)
     Running build script (log in var/build.log)
 
+
+Dependencies for MacOSX Building
+-----------------------------------
+```bash 
+cd gitian-builder
+mkdir inputs
+cd inputs
+wget https://github.com/cevap/MacOSX-SDKs/releases/download/MacOSX10.11.sdk-trusty/MacOSX10.11.sdk.tar.gz
+```
+
 Building an alternative repository
 -----------------------------------
 
@@ -399,7 +409,7 @@ and inputs.
 For example:
 ```bash
 URL=https://github.com/dondreytaylor/BTH.git
-COMMIT=53b4e896a60d1e29fbcad3409cb2e6e3cc1650a0
+COMMIT=5aeb503acc3c169364078c62936295578d80cdea
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-linux.yml
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-win.yml
 ./bin/gbuild --commit BTH=${COMMIT} --url BTH=${URL} ../BTH/contrib/gitian-descriptors/gitian-osx.yml
