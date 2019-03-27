@@ -11,7 +11,7 @@ Bithereum preserves and implements Bitcoin features such as SegWit, which enable
 - ASIC-resistant GPU-minable PoW algorithm (Equihash)
 - Per-block difficulty adjustment algorithm
 - Replay protection (SIGHASH_FORK_ID)
-- Unique wallet addresses (prefixes of G and A)
+- Unique wallet addresses (prefixes of B and H)
 
 Although BTH was bootstrapped on 12 Nov to create an entirely new network, it contains the entire Bitcoin blockchain until block 491406. As a result, Bithereum became a full fork with all Bitcoin transaction history since 2009. Any Bitcoin wallet address which held Bitcoin in BTC block 491406 before the fork held an equal number of Bithereum in BTH block 491407 after the fork.
 
@@ -33,8 +33,7 @@ Please check our [Responsible Disclosure](https://bithereum.network/responsible-
 
 * Website: https://bithereum.network
 * Tech Spec: https://github.com/dondreytaylor/BTH/wiki/Technical-Spec
-* Twitter: https://twitter.com/bithereum
-* Facebook: https://www.facebook.com/bithereumofficial/
-* Forum: https://forum.bithereum.network
-* Discord: [invitation](https://discord.gg/HmVUU6S)
-* Telegram (Global): https://t.me/BithereumNetworkHQ
+* Twitter: https://twitter.com/BithereumBTH
+* Forum: https://medium.com/bithereum-network
+* Discord: [invitation](https://discord.gg/wbsnuGN)
+* Telegram (Global): https://t.me/BithereumNetwork
