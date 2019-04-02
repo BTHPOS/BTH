@@ -29,6 +29,13 @@ If you discover a vulnerability, we would like to know about it so we can take s
 
 Please check our [Responsible Disclosure](https://bithereum.network/responsible-disclosure/) page for more details.
 
+# Explorers 
+
+(TESTNET) - http://explorer-testnet.bithereum.network:3002/
+(MAINNET) - http://explorer.bithereum.network
+(MAINNET) - http://insight.bithereum.network
+(MAINNET) - http://insight2.bithereum.network
+
 ## Links
 
 * Website: https://bithereum.network
