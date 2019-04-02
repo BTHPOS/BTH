@@ -36,7 +36,8 @@ Please check our [Responsible Disclosure](https://bithereum.network/responsible-
 * (MAINNET) - http://insight.bithereum.network
 * (MAINNET) - http://insight2.bithereum.network
 
-# Pools (Offical Pools)
+# Pools
+* https://miningpoolstats.stream/bithereum
 * http://pool.bithereum.network/
 * http://pool-testnet.bithereum.network:8080/
 
