@@ -31,10 +31,17 @@ Please check our [Responsible Disclosure](https://bithereum.network/responsible-
 
 # Explorers 
 
-(TESTNET) - http://explorer-testnet.bithereum.network:3002/
-(MAINNET) - http://explorer.bithereum.network
-(MAINNET) - http://insight.bithereum.network
-(MAINNET) - http://insight2.bithereum.network
+* (TESTNET) - http://explorer-testnet.bithereum.network:3002/
+* (MAINNET) - http://explorer.bithereum.network
+* (MAINNET) - http://insight.bithereum.network
+* (MAINNET) - http://insight2.bithereum.network
+
+# Pools (Offical Pools)
+* http://pool.bithereum.network/
+* http://pool-testnet.bithereum.network:8080/
+
+# Complete list of resources 
+https://bithereum.network/#!/resources
 
 ## Links
 
